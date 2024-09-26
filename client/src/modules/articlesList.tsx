@@ -28,6 +28,10 @@ const ArticleList = () => {
     }
     // Change to make a POST for symbol change
     fetchArticles();
+    // Filter Articles
+    // const interval     = Object.keys(tsData)[1];
+    // const intervalData = Object.entries(tsData[interval]);
+    // Filter Date
   }, [])
 
   return (
@@ -35,6 +39,8 @@ const ArticleList = () => {
       {articleData.map((article: any) => {
         return (
           <ArticleItem
+            source={article.source.name}
+            date={article.publishedAt}
             title={article.title}
             description={article.description}
             url={article.url}
