@@ -4,10 +4,9 @@ import React, {useState} from "react";
 interface SearchProps {
   value: string;
   ariaLabel: string;
-  // onChange: (value: string) => void;
 }
 
-const SearchInput: React.FC<SearchProps> = ({ value }) => {
+const SearchInput = () => {
   
   const [symbol, setSymbol] = useState<any>('')
 
@@ -16,7 +15,6 @@ const SearchInput: React.FC<SearchProps> = ({ value }) => {
     // Remove this to Refresh the page
     e.preventDefault()
     if (symbol === '') { return console.log('Empty Prompt')}
-    
     
     const response = await fetch('/news', {
       method: 'POST',

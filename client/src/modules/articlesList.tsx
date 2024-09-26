@@ -6,8 +6,6 @@ import SearchInput from './articleSearch';
 
 const ArticleList = () => {
   const [articleData, setArticleData] = useState<any>([])
-  
-  const [symbol, setSymbol] = useState<any>('')
 
   useEffect(() => {
 
@@ -34,14 +32,14 @@ const ArticleList = () => {
     // Filter Articles
     // const interval     = Object.keys(tsData)[1];
     // const intervalData = Object.entries(tsData[interval]);
-    // Filter Date
+    // Filter Date Format
   }, [])
 
   return (
     <div>
 
 
-      <SearchInput ariaLabel='Search' value={''}/>
+      <SearchInput/>
       {/* Load only if Search returns correctly */}
       {articleData.map((article: any) => {
         return (
