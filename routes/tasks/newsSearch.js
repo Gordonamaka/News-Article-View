@@ -19,4 +19,13 @@ router.get("/", async (req, res) => {
   // res.json(articlesList);
 });
 
+router.post("/", async (req, res) => {
+  const symbol = req.body
+  console.log(symbol);
+  if (!symbol) {
+    return res.status(400).send({status: 'Failed'})
+  }
+  res.status(200).send({status: 'Received query'});
+})
+
 module.exports = router;

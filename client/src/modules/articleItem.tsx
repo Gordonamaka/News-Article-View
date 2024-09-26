@@ -17,13 +17,13 @@ export const ArticleItem: React.FC<itemProps> = ({ date, source, title, descript
     <div className='article-app'>
       <div className='article-item'>
         <img className='article-img' src={urlToImage} alt=''/>
-        <h3>
+        <h1>
           <a href={url}>
             {title}
           </a>
-        </h3>
-        <span>{source}</span>
-        <span>{date}</span>
+        </h1>
+        <h2>{source}</h2>
+        <h3>{date}</h3>
         <p>
           {description}
         </p>

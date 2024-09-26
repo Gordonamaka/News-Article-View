@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import ArticleItem from './articleItem';
+import SearchInput from './articleSearch';
 
 
 
 const ArticleList = () => {
   const [articleData, setArticleData] = useState<any>([])
-  
+  const [symbol, setSymbol] = useState<any>('')
+
   useEffect(() => {
 
     const fetchArticles = async () => {
@@ -36,9 +38,14 @@ const ArticleList = () => {
 
   return (
     <div>
+
+
+      <SearchInput ariaLabel='Search' value={''}/>
+      {/* Load only if Search returns correctly */}
       {articleData.map((article: any) => {
         return (
           <ArticleItem
+            // Unique Key
             source={article.source.name}
             date={article.publishedAt}
             title={article.title}
@@ -48,6 +55,7 @@ const ArticleList = () => {
           />
         )
       })}
+
     </div>
   );
 }
