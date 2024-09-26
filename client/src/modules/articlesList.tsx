@@ -6,6 +6,7 @@ import SearchInput from './articleSearch';
 
 const ArticleList = () => {
   const [articleData, setArticleData] = useState<any>([])
+  
   const [symbol, setSymbol] = useState<any>('')
 
   useEffect(() => {
@@ -15,8 +16,8 @@ const ArticleList = () => {
       try {
         const response = await fetch("/news");
         if (!response.ok) {
-          throw new Error (`Response status: ${response.status}`)
-        }
+          throw new Error (`Response status: ${response.status}`);
+        };
   
         const articles = await response.json();
         console.log(articles);
