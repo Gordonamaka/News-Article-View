@@ -7,7 +7,10 @@ interface SearchProps {
   onChange: (value: string) => void;
 }
 
-
+// const response = await fetch("https://example.org/post", {
+//   body: JSON.stringify({ symbol: `${value}` }),
+//   // ...
+// });
 
 export const SearchInput: React.FC<SearchProps> = ({ value, onChange }) => {
   return (

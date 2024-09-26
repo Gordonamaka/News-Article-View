@@ -1,0 +1,15 @@
+.article-app {
+  display: flex;
+  justify-content: center;
+}
+
+.article-item {
+  width: 500px;
+  padding: 20px;
+  border: 1px solid;
+  margin-bottom: 20px;
+}
+
+.article-img {
+  width: 400px;
+}
