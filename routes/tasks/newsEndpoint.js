@@ -11,16 +11,19 @@ router.get("/", async (req, res) => {
     `https://newsapi.org/v2/everything?` + 
     `q=${keyword}&` +
     `from=2024-09-01&` +
+    `excludeDomains=yahoo.com&` +
     `language=en&` +
     `pageSize=20&` +
-    `sortBy=popularity&` +
+    `sortBy=relevancy&` +
     `apiKey=${API_KEY}`
   )
 
-  // Add Formatter function here
-
+  // Article Formatter function 
+  // Remove [Removed] Articles & Yahoo Articles (image formatting issues)
+  const articlesJSON = response.data.articles;
+  const filteredJSON = articlesJSON.filter(obj => !Object.values(obj).includes("[Removed]"));
   try {
-    res.send(response.data.articles);
+    res.send(filteredJSON);
   } catch (err) {
     res.send('Error Message', err);
   }

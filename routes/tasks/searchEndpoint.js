@@ -16,12 +16,16 @@ router.post("/", async (req, res) => {
     `https://newsapi.org/v2/everything?` + 
     `q=${keyword}&` +
     `from=2024-09-01&` +
+    `excludeDomains=yahoo.com&` +
     `language=en&` +
     `pageSize=20&` +
-    `sortBy=popularity&` +
+    `sortBy=relevancy&` +
     `apiKey=${API_KEY}`
   );
-    res.status(200).send(response.data.articles);
+    // Article Formatter
+    const articlesJSON = response.data.articles;
+    const filteredJSON = articlesJSON.filter(obj => !Object.values(obj).includes("[Removed]"));
+    res.status(200).send(filteredJSON);
   } catch (err) {
     console.error(err);
     res.status(500).send({ error: "Failed to fetch articles" });
