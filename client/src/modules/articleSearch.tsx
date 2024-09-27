@@ -1,34 +1,21 @@
 import React, {useState} from "react";
 
 
-interface SearchProps {
-  value: string;
-  ariaLabel: string;
+interface SearchInputProps {
+  onSearch: (symbol: string) => void;
 }
 
-const SearchInput = () => {
-  
-  const [symbol, setSymbol] = useState<any>('')
+const SearchInput: React.FC<SearchInputProps> = ({ onSearch }) => {
+  const [symbol, setSymbol] = useState<string>('');
 
+  const postSymbol = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (symbol === '') {
+      return console.log('Empty Prompt');
+    }
 
-  async function postSymbol(e:any) {
-    // Remove this to Refresh the page
-    e.preventDefault()
-    if (symbol === '') { return console.log('Empty Prompt')}
-    
-    const response = await fetch('/news', {
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify ({
-        symbol: symbol
-      })
-    });
-    if (!response.ok) {
-      throw new Error (`Response status: ${response.status}`)
-    };
-  }
+    onSearch(symbol);
+  };
   
   return (
     <div>

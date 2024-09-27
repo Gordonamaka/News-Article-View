@@ -18,7 +18,7 @@ app.get("/", (req, res) => {
   res.send("Article Backend");
 })
 
-// Api routes
+// Api routes & tasks
 
 // Users JSON
 const usersRoute = require('../routes/api/users');
@@ -27,9 +27,20 @@ app.use('/users', usersRoute);
 
 // Api Tasks
 
-// newsSearch
-const newsRoute = require('../routes/tasks/newsSearch');
+// News Practice Endpoint
+const newsRoute = require('../routes/tasks/newsEndpoint');
 app.use('/news', newsRoute);
+
+// Article Details Endpoint?
+const articleDetailsRoute = require('../routes/tasks/articleDetails');
+app.use('/news/details', articleDetailsRoute);
+
+// Favourites Endpoint
+const articleFavouritesRoute = require('../routes/tasks/favourites');
+app.use('/news/favourites', articleFavouritesRoute);
+
+const searchRoute = require('../routes/tasks/searchEndpoint');
+app.use('/search', searchRoute)
 
 // Register
 const registerRoute = require('../routes/tasks/register');
