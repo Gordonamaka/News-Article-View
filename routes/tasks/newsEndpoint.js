@@ -22,6 +22,12 @@ router.get("/", async (req, res) => {
   // Remove [Removed] Articles & Yahoo Articles (image formatting issues)
   const articlesJSON = response.data.articles;
   const filteredJSON = articlesJSON.filter(obj => !Object.values(obj).includes("[Removed]"));
+  // Date Formatter
+  filteredJSON.forEach(article => {
+    if (article.publishedAt) {
+      article.publishedAt = article.publishedAt.split('T')[0];
+    }
+  });
   try {
     res.send(filteredJSON);
   } catch (err) {

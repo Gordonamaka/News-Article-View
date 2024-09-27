@@ -25,6 +25,12 @@ router.post("/", async (req, res) => {
     // Article Formatter
     const articlesJSON = response.data.articles;
     const filteredJSON = articlesJSON.filter(obj => !Object.values(obj).includes("[Removed]"));
+    // Date Formatter
+    filteredJSON.forEach(article => {
+      if (article.publishedAt) {
+        article.publishedAt = article.publishedAt.split('T')[0];
+      }
+    });
     res.status(200).send(filteredJSON);
   } catch (err) {
     console.error(err);
