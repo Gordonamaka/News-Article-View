@@ -18,10 +18,11 @@ const SearchInput: React.FC<SearchInputProps> = ({ onSearch }) => {
   };
   
   return (
-    <div>
-      <form onSubmit={postSymbol}>
+    <div className="search-nav">
+      <form className="search-form" onSubmit={postSymbol}>
         <input
-          id="SearchInput" 
+          id="SearchInput"
+          className="search-input" 
           type="text"
           name="Search"
           aria-label="Search"
@@ -29,7 +30,7 @@ const SearchInput: React.FC<SearchInputProps> = ({ onSearch }) => {
           value={symbol}
           onChange={(e) => setSymbol(e.target.value)}
         />
-        <button id="postBtn" type="submit">
+        <button id="postBtn" className="post-btn" type="submit">
           Search
         </button>
       </form>

@@ -37,8 +37,9 @@ const ArticleList: React.FC = () => {
   // Filter Date Format
 
   return (
-    <div>
+    <div className='article-page'>
       <SearchInput onSearch={fetchArticles} />
+      <div className='article-container'>
       {articleData.map((article: any) => (
         <ArticleItem
           key={article.url} // Use a unique key
@@ -50,6 +51,7 @@ const ArticleList: React.FC = () => {
           urlToImage={article.urlToImage}
         />
       ))}
+      </div>
     </div>
   );
 };
