@@ -1,45 +1,82 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
+import '../styles/loginModule.css'
 
-
-interface SearchInputProps {
-  onSearch: (symbol: string) => void;
+interface LoginInputProps {
+  onLogin: (email: string, 
+            password: string) => void;
 }
 
-const loginForm: React.FC<SearchInputProps> = ({ onSearch }) => {
-  // const [symbol, setSymbol] = useState<string>('');
+const LoginForm:React.FC<LoginInputProps> = ({ onLogin }) => {
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
 
-  // const postSymbol = async (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   if (symbol === '') {
-  //     return console.log('Empty Prompt');
-  //   }
+  const postLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault(); // May remove to reload with user logged in
+    if (email || password === '') {
+      return console.log('Empty Prompt');
+    }
+    onLogin(email, password);
+  };
 
-  //   onSearch(symbol);
-  // };
-  
+  function openForm() {
+    document.getElementById("login")!.style.display = "block";
+  }
+
+  function closeForm() {
+    document.getElementById("login")!.style.display = "none";
+  }
+
+
   return (
-    <div className="top-nav">
-      {/* <div className="search-nav">  
-        <form className="search-form" onSubmit={postSymbol}>
-          <input
-            id="SearchInput"
-            className="search-input" 
-            type="text"
-            name="Search"
-            aria-label="Search"
-            placeholder="Search article Keyword here"
-            value={symbol}
-            onChange={(e) => setSymbol(e.target.value)}
-          />
-          <button id="postBtn" className="post-btn" type="submit">
-            Search
-          </button>
-        </form>
-      </div>
+      <div className="login-area">
+        <button className="login-btn" onClick={openForm}>
+          Login
+        </button>
 
-       */}
-    </div>
+        <div className="login-popup" id="login">
+          <form className="login-container" onSubmit={postLogin}>
+            
+            <h1>Login</h1>   
+
+            <label>
+              <b>Email</b>
+            </label>
+            <input
+            id="email" 
+            type="text"
+            className="email-input" 
+            placeholder="Enter Email" 
+            name="email" 
+            aria-label="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)} 
+            required/>
+
+            <label>
+              <b>Password</b>
+            </label>
+            <input 
+            type="password"
+            className="password-input" 
+            placeholder="Enter Password" 
+            name="password" 
+            aria-label="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)} 
+            required/>
+
+            <button id="postLogin" className="post-login" type="submit">
+              Login
+            </button>
+
+            <button id="close" className="close-btn" onClick={closeForm}>
+              Close
+            </button>
+          </form>
+        </div>
+        
+      </div>
   );
 };
 
-export default loginForm
+export default LoginForm

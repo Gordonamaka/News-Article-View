@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import ArticleItem from './articleItem';
 import SearchInput from './articleSearch';
+import LoginForm from './login';
 import '../styles/articleSection.css'
+import RegisterForm from './register';
 
 
 
 const ArticleList: React.FC = () => {
   const [articleData, setArticleData] = useState<any[]>([]);
 
+  // Export
   const fetchArticles = async (symbol: string) => {
     
     // Clear ArticleData before Fetching new Articles - May remove for Pagination
@@ -35,12 +38,26 @@ const ArticleList: React.FC = () => {
       }
     }
   };
-  // Change to make a POST for symbol change
+
+  // Change to make a POST for Login/Register 
+  const loginUser = async (email:string, password:string) => {
+    // Login Logic
+    return
+  }
+
+  const registerUser = async (email:string, password:string) => {
+    // Login Logic
+    return
+  }
   
 
   return (
     <div className='article-page'>
+      <div className='nav'>
+      <RegisterForm onRegister={registerUser}/>
+      <LoginForm onLogin={loginUser}/>
       <SearchInput onSearch={fetchArticles} />
+      </div>
 
       {/* Conditional Rendering for Animation Effect */}
       {articleData.length > 0 ? (
@@ -59,7 +76,7 @@ const ArticleList: React.FC = () => {
         </div>
       ) : (
         <div>
-          ...
+          <h1>Waiting for user to search for Articles...</h1>
         </div>
       )}
     </div>

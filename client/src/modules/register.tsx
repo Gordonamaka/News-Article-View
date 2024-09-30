@@ -1,44 +1,81 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
+import '../styles/registerModule.css'
 
-
-interface SearchInputProps {
-  onSearch: (symbol: string) => void;
+interface RegisterInputProps {
+  onRegister: (email: string, 
+            password: string) => void;
 }
 
-const RegisterForm: React.FC<SearchInputProps> = ({ onSearch }) => {
-  // const [symbol, setSymbol] = useState<string>('');
+const RegisterForm:React.FC<RegisterInputProps> = ({ onRegister }) => {
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
 
-  // const postSymbol = async (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   if (symbol === '') {
-  //     return console.log('Empty Prompt');
-  //   }
+  const postRegister = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault(); // May remove to reload with user logged in
+    if (email || password === '') {
+      return console.log('Empty Prompt');
+    }
+    onRegister(email, password);
+  };
 
-  //   onSearch(symbol);
-  // };
-  
+  function openForm() {
+    document.getElementById("register")!.style.display = "block";
+  }
+
+  function closeForm() {
+    document.getElementById("register")!.style.display = "none";
+  }
+
+
   return (
-    <div className="top-nav">
-      {/* <div className="search-nav">  
-        <form className="search-form" onSubmit={postSymbol}>
-          <input
-            id="SearchInput"
-            className="search-input" 
-            type="text"
-            name="Search"
-            aria-label="Search"
-            placeholder="Search article Keyword here"
-            value={symbol}
-            onChange={(e) => setSymbol(e.target.value)}
-          />
-          <button id="postBtn" className="post-btn" type="submit">
-            Search
-          </button>
-        </form>
-      </div>
+      <div className="register-area">
+        <button className="register-btn" onClick={openForm}>
+          Register
+        </button>
 
-       */}
-    </div>
+        <div className="register-popup" id="register">
+          <form className="register-container" onSubmit={postRegister}>
+            
+            <h1>Register</h1>   
+
+            <label>
+              <b>Email</b>
+            </label>
+            <input
+            id="email" 
+            type="text"
+            className="email-input" 
+            placeholder="Enter Email" 
+            name="email" 
+            aria-label="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)} 
+            required/>
+
+            <label>
+              <b>Password</b>
+            </label>
+            <input 
+            type="password"
+            className="password-input" 
+            placeholder="Enter Password" 
+            name="password" 
+            aria-label="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)} 
+            required/>
+
+            <button id="postregister" className="post-register" type="submit">
+              Register
+            </button>
+
+            <button id="close" className="close-btn" onClick={closeForm}>
+              Close
+            </button>
+          </form>
+        </div>
+        
+      </div>
   );
 };
 

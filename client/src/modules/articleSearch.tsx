@@ -18,26 +18,22 @@ const SearchInput: React.FC<SearchInputProps> = ({ onSearch }) => {
   };
   
   return (
-    <div className="top-nav"> 
-      <div className="search-nav">  
-        <form className="search-form" onSubmit={postSymbol}>
-          <input
-            id="SearchInput"
-            className="search-input" 
-            type="text"
-            name="Search"
-            aria-label="Search"
-            placeholder="Search article Keyword here"
-            value={symbol}
-            onChange={(e) => setSymbol(e.target.value)}
-          />
-          <button id="postBtn" className="post-btn" type="submit">
-            Search
-          </button>
-        </form>
-      </div>
-
-
+    <div className="search-nav">  
+      <form className="search-form" onSubmit={postSymbol}>
+        <input
+          id="SearchInput"
+          className="search-input" 
+          type="text"
+          name="Search"
+          aria-label="Search"
+          placeholder="Search article Keyword here"
+          value={symbol}
+          onChange={(e) => setSymbol(e.target.value)}
+        />
+        <button id="postBtn" className="post-btn" type="submit">
+          Search
+        </button>
+      </form>
     </div>
   );
 };
