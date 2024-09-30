@@ -5,21 +5,21 @@ interface SearchInputProps {
   onSearch: (symbol: string) => void;
 }
 
-const SearchInput: React.FC<SearchInputProps> = ({ onSearch }) => {
-  const [symbol, setSymbol] = useState<string>('');
+const Pagination: React.FC<SearchInputProps> = ({ onSearch }) => {
+  // const [symbol, setSymbol] = useState<string>('');
 
-  const postSymbol = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (symbol === '') {
-      return console.log('Empty Prompt');
-    }
+  // const postSymbol = async (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   if (symbol === '') {
+  //     return console.log('Empty Prompt');
+  //   }
 
-    onSearch(symbol);
-  };
+  //   onSearch(symbol);
+  // };
   
   return (
-    <div className="top-nav"> 
-      <div className="search-nav">  
+    <div className="top-nav">
+      {/* <div className="search-nav">  
         <form className="search-form" onSubmit={postSymbol}>
           <input
             id="SearchInput"
@@ -37,9 +37,9 @@ const SearchInput: React.FC<SearchInputProps> = ({ onSearch }) => {
         </form>
       </div>
 
-
+       */}
     </div>
   );
 };
 
-export default SearchInput
+export default Pagination

@@ -27,6 +27,18 @@ export const ArticleItem: React.FC<itemProps> = ({ date, source, title, descript
         <p className='description-label'>
           {description}
         </p>
+
+        <div className='details-favourite'>
+            {/* Article Details Module Opener */}
+          <button className='details-btn'>
+            Details
+          </button>
+            {/* Favourite Article */}
+          <button className='favourite-btn'
+          type='submit'>
+            Favourite
+          </button>
+        </div>
       </div>
     </div>
   )

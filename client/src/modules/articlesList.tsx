@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import ArticleItem from './articleItem';
 import SearchInput from './articleSearch';
+import '../styles/articleSection.css'
 
 
 
@@ -8,6 +9,10 @@ const ArticleList: React.FC = () => {
   const [articleData, setArticleData] = useState<any[]>([]);
 
   const fetchArticles = async (symbol: string) => {
+    
+    // Clear ArticleData before Fetching new Articles - May remove for Pagination
+    setArticleData([]);
+    
     try {
       const response = await fetch('/search', {
         method: 'POST',
@@ -31,27 +36,32 @@ const ArticleList: React.FC = () => {
     }
   };
   // Change to make a POST for symbol change
-  // Filter Articles
-  // const interval     = Object.keys(tsData)[1];
-  // const intervalData = Object.entries(tsData[interval]);
-  // Filter Date Format
+  
 
   return (
     <div className='article-page'>
       <SearchInput onSearch={fetchArticles} />
-      <div className='article-container'>
-      {articleData.map((article: any) => (
-        <ArticleItem
-          key={article.url} // Use a unique key
-          source={article.source.name}
-          date={article.publishedAt}
-          title={article.title}
-          description={article.description}
-          url={article.url}
-          urlToImage={article.urlToImage}
-        />
-      ))}
-      </div>
+
+      {/* Conditional Rendering for Animation Effect */}
+      {articleData.length > 0 ? (
+        <div className='article-container'>
+          {articleData.map((article: any) => (
+            <ArticleItem
+              key={article.url} // Use a unique key
+              source={article.source.name}
+              date={article.publishedAt}
+              title={article.title}
+              description={article.description}
+              url={article.url}
+              urlToImage={article.urlToImage}
+            />
+          ))}
+        </div>
+      ) : (
+        <div>
+          ...
+        </div>
+      )}
     </div>
   );
 };
