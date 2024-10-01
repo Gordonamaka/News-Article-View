@@ -1,8 +1,8 @@
-const express     = require('express');
-const router      = express();
-const { Pool }     = require('pg');
-const { dbParams } = require('../../db/params/dbParams');
-const { addUser } = require('../../db/queries/users');
+const express       = require('express');
+const router        = express();
+const { Pool }      = require('pg');
+const { dbParams }  = require('../../db/params/dbParams');
+const { addUser }   = require('../../db/queries/users');
 
 const pool = new Pool(dbParams);
 
@@ -12,11 +12,10 @@ router.post('/', (req, res) => {
       `
       SELECT *
       FROM users
-      WHERE email = $1 OR username = $2
+      WHERE email = $1
       `,
       [
         req.body.email,
-        req.body.username
       ])
     .then((result) => {
       if (result.rows[0]) {

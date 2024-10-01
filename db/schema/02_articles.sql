@@ -1,8 +1,9 @@
--- Drop & Create Users Table
+-- Drop & Create Article Favourite ref to User Table
 
 DROP TABLE IF EXISTS articles CASCADE;
 CREATE TABLE articles (
   id SERIAL PRIMARY KEY NOT NULL,
+  user_id INTEGER REFERENCES users(id) ON DELETE SET NULL,
   source_name VARCHAR(255) NOT NULL,
   author VARCHAR(255) NOT NULL,
   title VARCHAR(255) NOT NULL,

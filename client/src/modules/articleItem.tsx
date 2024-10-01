@@ -30,11 +30,11 @@ export const ArticleItem: React.FC<itemProps> = ({ date, source, title, descript
 
         <div className='details-favourite'>
             {/* Article Details Module Opener */}
-          <button className='details-btn'>
+          <button className='btn details-btn'>
             Details
           </button>
             {/* Favourite Article */}
-          <button className='favourite-btn'
+          <button className='btn favourite-btn'
           type='submit'>
             Favourite
           </button>

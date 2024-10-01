@@ -11,7 +11,7 @@ const LoginForm:React.FC<LoginInputProps> = ({ onLogin }) => {
   const [password, setPassword] = useState<string>('');
 
   const postLogin = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); // May remove to reload with user logged in
+    e.preventDefault(); // May remove to reload with user logged in (?)
     if (email || password === '') {
       return console.log('Empty Prompt');
     }

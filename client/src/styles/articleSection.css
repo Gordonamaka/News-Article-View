@@ -1,6 +1,6 @@
 .article-container {
-  animation: transitionIn 0.75s;
-  background-color: aquamarine;
+  animation: transitionIn 1s;
+  background-color: #FFF9E4;
 }
 
 @keyframes transitionIn {

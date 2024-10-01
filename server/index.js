@@ -1,17 +1,22 @@
 require('dotenv').config({ path: '../.env' });
-const express    = require('express');
-const cors       = require('cors');
-const helmet     = require("helmet");
-const bodyParser = require('body-parser');
-const app        = express();
-const PORT       = process.env.PORT;
+const express       = require('express');
+const cors          = require('cors');
+const helmet        = require("helmet");
+const bodyParser    = require('body-parser');
+const app           = express();
+const PORT          = process.env.PORT;
+const cookieSession = require('cookie-session');
 
 
 app.use(cors());
 app.use(helmet());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }))
-
+// In memory credentials storage
+app.use(cookieSession({
+  name: 'news_assessment',
+  keys: [ process.env.keys ],
+}));
 
 // Landing
 app.get("/", (req, res) => {
@@ -24,6 +29,9 @@ app.get("/", (req, res) => {
 const usersRoute = require('../routes/api/users');
 app.use('/users', usersRoute);
 
+// Favourites Endpoint -- Need to map with an :id param
+const articleFavouritesRoute = require('../routes/api/favourites');
+app.use('/users/favourites', articleFavouritesRoute);
 
 // Api Tasks
 
@@ -35,10 +43,7 @@ app.use('/news', newsRoute);
 const articleDetailsRoute = require('../routes/tasks/articleDetails');
 app.use('/news/details', articleDetailsRoute);
 
-// Favourites Endpoint
-const articleFavouritesRoute = require('../routes/tasks/favourites');
-app.use('/news/favourites', articleFavouritesRoute);
-
+// Search
 const searchRoute = require('../routes/tasks/searchEndpoint');
 app.use('/search', searchRoute)
 

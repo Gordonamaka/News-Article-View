@@ -3,7 +3,7 @@ import '../styles/registerModule.css'
 
 interface RegisterInputProps {
   onRegister: (email: string, 
-            password: string) => void;
+               password: string) => void;
 }
 
 const RegisterForm:React.FC<RegisterInputProps> = ({ onRegister }) => {
@@ -11,7 +11,7 @@ const RegisterForm:React.FC<RegisterInputProps> = ({ onRegister }) => {
   const [password, setPassword] = useState<string>('');
 
   const postRegister = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); // May remove to reload with user logged in
+    e.preventDefault(); // May remove to reload with user logged in (?)
     if (email || password === '') {
       return console.log('Empty Prompt');
     }

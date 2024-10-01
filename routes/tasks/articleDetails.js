@@ -1,10 +1,10 @@
-const express      = require('express');
-const router       = express();
-const { Pool }     = require('pg');
-const { dbParams } = require('../../db/params/dbParams');
+const express         = require('express');
+const router          = express();
+const { Pool }        = require('pg');
+const { dbParams }    = require('../../db/params/dbParams');
 
 // Input News Data into PSQL Table
-const pool = new Pool(dbParams);
+const pool            = new Pool(dbParams);
 const { newsFetcher } = require("../../lib/newsFetcher")
 
 // For collecting & Mapping Favourite Articles to specific User **

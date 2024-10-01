@@ -1,45 +1,59 @@
-import React, {useState} from "react";
+import React from "react";
+import '../styles/pagination.css';
 
+/* Note: Had to remove first page and last page buttons because using the last page button would cycle through all the pages and break the api limit of 100 uses. */
 
-interface SearchInputProps {
-  onSearch: (symbol: string) => void;
+interface PaginationProps {
+  totalResults: number;
+  currentPage: number;
+  onPageChange: (page: number) => void;
 }
 
-const Pagination: React.FC<SearchInputProps> = ({ onSearch }) => {
-  // const [symbol, setSymbol] = useState<string>('');
-
-  // const postSymbol = async (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   if (symbol === '') {
-  //     return console.log('Empty Prompt');
-  //   }
-
-  //   onSearch(symbol);
-  // };
+export const PaginationElement: React.FC<PaginationProps> = ({
+  totalResults, 
+  currentPage, 
+  onPageChange
+}) => {
   
-  return (
-    <div className="top-nav">
-      {/* <div className="search-nav">  
-        <form className="search-form" onSubmit={postSymbol}>
-          <input
-            id="SearchInput"
-            className="search-input" 
-            type="text"
-            name="Search"
-            aria-label="Search"
-            placeholder="Search article Keyword here"
-            value={symbol}
-            onChange={(e) => setSymbol(e.target.value)}
-          />
-          <button id="postBtn" className="post-btn" type="submit">
-            Search
-          </button>
-        </form>
-      </div>
+  let totalPages = Math.ceil(totalResults / 25);
 
-       */}
+  return (
+    <div id="pagination">
+      {/* <button
+        onClick={() => onPageChange(1)} 
+        disabled={currentPage === 1}
+      >
+        First Page
+      </button> */}
+
+      <button 
+        id='prev' 
+        className="btn"
+        onClick={() => onPageChange(currentPage - 1)} 
+        disabled={currentPage === 1}
+      >
+        Previous Page
+      </button>
+
+      <p id="page-index">Page {currentPage} of {totalPages}</p>
+
+      <button 
+        id="next" 
+        className="btn"
+        onClick={() => onPageChange(currentPage + 1)} 
+        disabled={currentPage === totalPages}
+      >
+        Next Page
+      </button>
+
+      {/* <button
+        onClick={() => onPageChange(totalPages)} 
+        disabled={currentPage === totalPages}
+      >
+        Last Page
+      </button> */}
     </div>
   );
 };
 
-export default Pagination
+export default PaginationElement;

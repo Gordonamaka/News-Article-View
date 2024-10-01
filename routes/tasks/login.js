@@ -1,14 +1,28 @@
-const express      = require('express');
-const router       = express();
-const { Pool }     = require('pg');
-const { dbParams } = require('../../db/params/dbParams');
+require('dotenv').config({ path: '../.env' });
+const express         = require('express');
+const router          = express();
+const { Pool }        = require('pg');
+const cookieSession   = require('cookie-session');
+const { dbParams }    = require('../../db/params/dbParams');
+const { addArticle }  = require('../../db/queries/articles');
 
 const pool = new Pool(dbParams);
 
+// In memory login credentials storage
+router.use(cookieSession({
+  name: 'news_assessment',
+  keys: [ process.env.keys ],
+}));
+
+
 router.post('/', (req, res) => {
-  let email = req.body.email;
-  let password = req.body.password;
   console.log(req.body);
+  console.log('--------------------');
+  console.log(req.body.email);
+  console.log(req.body.password);  
+  
+  const inputEmail = req.body.email;
+  const inputPassword = req.body.password;
   return pool
     .query(
       `
@@ -18,11 +32,23 @@ router.post('/', (req, res) => {
       `, [email]
     )
     .then((result) => {
-      const loggedPass = result.rows[0].password;
-      if (password === loggedPass) {
-        res.send(result.rows[0]);
+      const dBEmail = result.rows[0].email;
+      const dBPassword = result.rows[0].password;
+      const dBUser = result.rows[0].id;
+
+      if (dBEmail) {
+        console.log('Success, currently matching passwords... Check client response tab or console for verification');
+        
+        if (inputPassword === dBPassword) {
+          req.session.user_id = dBUser;
+          console.log(dBUser);
+          // addArticle(dBUser);
+          res.status(200).send('Officially logged in');
+        } else if (result === false) {
+          res.status(401).send('Username or Password is incorrect');
+        }
       } else {
-        res.status(401).send({message: "A user with this password does not exist, please try again"});
+        res.status(401).send({message: "Access denied, please try again"});
       }
     })
     .catch((err) => {

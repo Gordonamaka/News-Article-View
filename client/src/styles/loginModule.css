@@ -11,6 +11,7 @@
   top: 23px;
   right: 28px;
   width: 100px;
+  border-radius: 9999px;
 }
 
 .login-popup {

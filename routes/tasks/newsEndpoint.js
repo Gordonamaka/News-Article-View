@@ -7,31 +7,44 @@ const router             = express.Router();
 router.get("/", async (req, res) => {
   const keyword         = 'Apple';
   const API_KEY         = process.env.API_KEY
-  const response        = await axios.get(
-    `https://newsapi.org/v2/everything?` + 
-    `q=${keyword}&` +
-    `from=2024-09-01&` +
-    `excludeDomains=yahoo.com&` +
-    `language=en&` +
-    `pageSize=20&` +
-    `sortBy=relevancy&` +
-    `apiKey=${API_KEY}`
-  )
-
-  // Article Formatter function 
-  // Remove [Removed] Articles & Yahoo Articles (image formatting issues)
-  const articlesJSON = response.data.articles;
-  const filteredJSON = articlesJSON.filter(obj => !Object.values(obj).includes("[Removed]"));
-  // Date Formatter
-  filteredJSON.forEach(article => {
-    if (article.publishedAt) {
-      article.publishedAt = article.publishedAt.split('T')[0];
-    }
-  });
+  
+  // Used Axios as opposed to Fetch for simplicity.
+  // Serverside Practice for search field functionality
   try {
-    res.send(filteredJSON);
+    const response         = await axios.get(
+      `https://newsapi.org/v2/everything?` + 
+      `q=${keyword}&` +
+      `from=2024-09-25&` +
+      `excludeDomains=yahoo.com&` +
+      `language=en&` +
+      `pageSize=25&` +
+      `page=1&` +
+      `sortBy=relevancy&` +
+      `apiKey=${API_KEY}`
+    );
+    
+    // Total Results/Pages for Pagination
+    const totalResults = response.data.totalResults;
+    console.log(totalResults);
+    let totalPages = Math.ceil(totalResults / 25);
+    console.log(totalPages);
+
+    // Article Formatter
+    const articlesJSON    = response.data.articles;
+    const filteredJSON    = articlesJSON.filter(obj => !Object.values(obj).includes("[Removed]"));
+    
+    // Date Formatter
+    filteredJSON.forEach(article => {
+      if (article.publishedAt) {
+        article.publishedAt = article.publishedAt.split('T')[0];
+      }
+    });
+    
+    res.status(200).send(filteredJSON);
+  
   } catch (err) {
-    res.send('Error Message', err);
+    console.error(err);
+    res.status(500).send({ error: "Failed to fetch articles" });
   }
 });
 
