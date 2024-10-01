@@ -1,5 +1,6 @@
-import React from 'react'
-import '../styles/global.css'
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import '../styles/global.css';
 
 interface itemProps {
   date: string,
@@ -7,11 +8,19 @@ interface itemProps {
   title: string,
   description: string,
   url: string,
-  urlToImage: string
+  urlToImage: string,
+  article: any,
 }
 
-export const ArticleItem: React.FC<itemProps> = ({ date, source, title, description, url, urlToImage }) => {
+export const ArticleItem: React.FC<itemProps> = ({ date, source, title, description, url, urlToImage, article }) => {
 
+  const navigate = useNavigate();
+
+  const handleDetailsRedirect = () => {
+    navigate(`/article`, { 
+      state: { article }, 
+    });
+  };
 
   return (
     <div className='article-app'>
@@ -30,7 +39,7 @@ export const ArticleItem: React.FC<itemProps> = ({ date, source, title, descript
 
         <div className='details-favourite'>
             {/* Article Details Module Opener */}
-          <button className='btn details-btn'>
+          <button className='btn details-btn' onClick={handleDetailsRedirect}>
             Details
           </button>
             {/* Favourite Article */}

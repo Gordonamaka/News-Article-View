@@ -1,45 +1,26 @@
-import React, {useState} from "react";
+import React from 'react';
+import { useLocation } from 'react-router-dom';
 
+const ArticleDetail: React.FC = () => {
+  const location = useLocation();
 
-interface ArticleProps {
-  onSearch: (symbol: string) => void;
-}
+  // Access the article data from location.state
+  const article = location.state?.article;
 
-const ArticleDetails: React.FC<ArticleProps> = ({ onSearch }) => {
-  // const [symbol, setSymbol] = useState<string>('');
+  if (!article) {
+    return <p>Article not found. Please go back and select an article.</p>;
+  }
 
-  // const postSymbol = async (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   if (symbol === '') {
-  //     return console.log('Empty Prompt');
-  //   }
-
-  //   onSearch(symbol);
-  // };
-  
   return (
-    <div className="top-nav">
-      {/* <div className="search-nav">  
-        <form className="search-form" onSubmit={postSymbol}>
-          <input
-            id="SearchInput"
-            className="search-input" 
-            type="text"
-            name="Search"
-            aria-label="Search"
-            placeholder="Search article Keyword here"
-            value={symbol}
-            onChange={(e) => setSymbol(e.target.value)}
-          />
-          <button id="postBtn" className="post-btn" type="submit">
-            Search
-          </button>
-        </form>
-      </div>
-
-       */}
+    <div>
+      <h1>{article.title}</h1>
+      <img src={article.urlToImage} alt={article.title} />
+      <p>{article.description}</p>
+      <p>{article.source.name}</p>
+      <p>{article.publishedAt}</p>
+      <a href={article.url} target="_blank" rel="noopener noreferrer">Read full article</a>
     </div>
   );
 };
 
-export default ArticleDetails
+export default ArticleDetail;

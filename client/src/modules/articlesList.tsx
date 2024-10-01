@@ -37,12 +37,12 @@ const ArticleList: React.FC = () => {
   };
 
   const handlePagination = async (newPage: number) => {
-    
     const nextArticles = await FetchArticles(currentSymbol, newPage);
-    setCurrentSymbol(nextArticles[0]); // Retain the current Symbol sent to API
-    setCurrentPage(nextArticles[1]); // Set the page that is returned by POST
-    setTotalResults(nextArticles[2]); // Set the total number of articles by keyword
-    setArticleData(nextArticles[3]); // Set the fetched articles in the state
+    setCurrentSymbol(nextArticles[0]);
+    setCurrentPage(nextArticles[1]);
+    setTotalResults(nextArticles[2]);
+    setArticleData(nextArticles[3]);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -59,7 +59,7 @@ const ArticleList: React.FC = () => {
       {articleData.length > 0 ? (
         <div >
           <div className='article-container'>
-            {articleData.map((article: any) => (
+            {articleData.map((article) => (
               <ArticleItem
                 key={article.url} // Use a unique key
                 source={article.source.name}
@@ -68,6 +68,7 @@ const ArticleList: React.FC = () => {
                 description={article.description}
                 url={article.url}
                 urlToImage={article.urlToImage}
+                article={article} // For individual article viewing
               />
             ))}
           </div>
