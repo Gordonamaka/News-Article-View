@@ -20,7 +20,7 @@ app.use(cookieSession({
 
 // Landing
 app.get("/", (req, res) => {
-  res.send("Article Backend");
+  res.send("News Article Backend");
 })
 
 // Api routes & tasks
@@ -29,19 +29,11 @@ app.get("/", (req, res) => {
 const usersRoute = require('../routes/api/users');
 app.use('/users', usersRoute);
 
-// Favourites Endpoint -- Need to map with an :id param
-const articleFavouritesRoute = require('../routes/api/favourites');
-app.use('/users/favourites', articleFavouritesRoute);
-
-// Api Tasks
-
 // News Practice Endpoint
-const newsRoute = require('../routes/tasks/newsEndpoint');
+const newsRoute = require('../routes/api/newsEndpoint');
 app.use('/news', newsRoute);
 
-// Article Details Endpoint?
-const articleDetailsRoute = require('../routes/tasks/articleDetails');
-app.use('/news/details', articleDetailsRoute);
+// Api Tasks
 
 // Search
 const searchRoute = require('../routes/tasks/searchEndpoint');
@@ -55,6 +47,9 @@ app.use('/register', registerRoute);
 const loginRoute = require('../routes/tasks/login');
 app.use('/login', loginRoute);
 
+// Favourites Endpoint -- Need to map with an :id param
+const articleFavouritesRoute = require('../routes/tasks/favourites');
+app.use('/users/favourites', articleFavouritesRoute);
 
 // Listener
 app.listen(PORT, () => { console.log(`Server started on port ${PORT}`) })

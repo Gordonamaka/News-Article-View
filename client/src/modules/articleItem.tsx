@@ -13,13 +13,16 @@ interface itemProps {
 
 export const ArticleItem: React.FC<itemProps> = ({ date, source, title, description, url, urlToImage, article }) => {
 
-  // Will have to use local storage over useNavigate to open details within memory in a new tab, else the search restarts.
+  // Will use local storage over useNavigate to open details within memory in a new tab, else the search restarts.
   const handleDetailsRedirect = () => {
     // Save memory
     localStorage.setItem('currentArticle', JSON.stringify(article));
     // Open in a new tab
     window.open('/article', '_blank');
   };
+
+  // ** Disable Favourite Btn if user is not logged in.
+
 
   return (
     <div className='article-app'>

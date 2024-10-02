@@ -23,7 +23,8 @@ const ArticleList: React.FC = () => {
   const [articleData, setArticleData] = useState<ArticleType[]>([]);
   const [totalResults, setTotalResults] = useState<number>(0);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [currentSymbol, setCurrentSymbol] = useState<string>(''); 
+  const [currentSymbol, setCurrentSymbol] = useState<string>('');
+  // const [user, setUser] = useState(); 
 
   const handleFetchArticles = async (symbol: string) => {
     // Clear articleData before fetching new articles
@@ -49,10 +50,14 @@ const ArticleList: React.FC = () => {
     <div className='article-page'>
       <h1 id='page-title'> News App</h1>
       <div className='nav'>
-      <SearchInput onSearch={handleFetchArticles} />
-      <RegisterForm onRegister={RegisterUser}/>
-      <LoginForm onLogin={LoginUser}/>
-      {currentSymbol.length > 0 && <h1 id="query">Showing {totalResults} Results for: {currentSymbol}</h1>}
+        <SearchInput onSearch={handleFetchArticles} />
+        
+        {/* Replace W/ user State once Registered */}
+        <RegisterForm onRegister={RegisterUser}/>
+        <LoginForm onLogin={LoginUser}/>
+        {/* Replace W/ user once Logged In */}
+        
+        {currentSymbol.length > 0 && <h1 id="query">Showing {totalResults} Results for: {currentSymbol}</h1>}
       </div>
 
       {/* Conditional Rendering for Animation Effect & Loading Phase */}
