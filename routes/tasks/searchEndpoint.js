@@ -11,7 +11,6 @@ router.post("/", async (req, res) => {
   // Page Number Object destructuring
   const { pageNumber }   = ticker
   const page             = pageNumber
-  console.log(page);
 
   const API_KEY          = process.env.API_KEY
   

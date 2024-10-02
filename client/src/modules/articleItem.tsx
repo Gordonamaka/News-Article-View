@@ -1,5 +1,4 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import '../styles/global.css';
 
 interface itemProps {
@@ -14,12 +13,12 @@ interface itemProps {
 
 export const ArticleItem: React.FC<itemProps> = ({ date, source, title, description, url, urlToImage, article }) => {
 
-  const navigate = useNavigate();
-
+  // Will have to use local storage over useNavigate to open details within memory in a new tab, else the search restarts.
   const handleDetailsRedirect = () => {
-    navigate(`/article`, { 
-      state: { article }, 
-    });
+    // Save memory
+    localStorage.setItem('currentArticle', JSON.stringify(article));
+    // Open in a new tab
+    window.open('/article', '_blank');
   };
 
   return (

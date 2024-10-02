@@ -31,6 +31,15 @@
   color: black;
 }
 
+button:disabled,
+button[disabled],
+button[disabled]:hover {
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+  cursor: not-allowed;
+}
+
 #query {
   text-align: right;
 }

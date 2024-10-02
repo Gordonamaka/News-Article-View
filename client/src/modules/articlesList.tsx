@@ -55,20 +55,20 @@ const ArticleList: React.FC = () => {
       {currentSymbol.length > 0 && <h1 id="query">Showing {totalResults} Results for: {currentSymbol}</h1>}
       </div>
 
-      {/* Conditional Rendering for Animation Effect */}
+      {/* Conditional Rendering for Animation Effect & Loading Phase */}
       {articleData.length > 0 ? (
         <div >
           <div className='article-container'>
             {articleData.map((article) => (
               <ArticleItem
-                key={article.url} // Use a unique key
+                key={article.url}
                 source={article.source.name}
                 date={article.publishedAt}
                 title={article.title}
                 description={article.description}
                 url={article.url}
                 urlToImage={article.urlToImage}
-                article={article} // For individual article viewing
+                article={article} // For Article Detail Viewing
               />
             ))}
           </div>
