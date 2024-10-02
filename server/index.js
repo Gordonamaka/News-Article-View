@@ -17,6 +17,7 @@ app.use(cors(corsOptions));
 app.use(helmet());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }))
+
 // In memory credentials storage
 app.use(cookieSession({
   name: 'news_assessment',

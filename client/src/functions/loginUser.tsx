@@ -1,6 +1,6 @@
 export const LoginUser = async (email: string, password: string) => {
   try {
-    const response = await fetch('/login', {
+    const response = await fetch('/tasks/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

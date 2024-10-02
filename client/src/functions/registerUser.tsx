@@ -1,11 +1,11 @@
-export const RegisterUser = async (email: string, password: string) => {
+export const RegisterUser = async (firstName: string, lastName: string, email: string, password: string) => {
   try {
-    const response = await fetch('/register', {
+    const response = await fetch('/tasks/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ email: `${email}`, password: `${password}` }),
+      body: JSON.stringify({ firstName: `${firstName}`, lastName: `${lastName}`, email: `${email}`, password: `${password}` }),
     });
 
     if (!response.ok) {

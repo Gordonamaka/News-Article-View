@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import '../styles/loginModule.css'
 
 interface LoginInputProps {
-  onLogin: (email: string, 
-            password: string) => void;
+  onLogin: (
+    email: string, 
+    password: string) => void;
 }
 
 const LoginForm:React.FC<LoginInputProps> = ({ onLogin }) => {
@@ -12,7 +13,7 @@ const LoginForm:React.FC<LoginInputProps> = ({ onLogin }) => {
 
   const postLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // May remove to reload with user logged in (?)
-    if (email || password === '') {
+    if (email === '' || password === '') {
       return console.log('Empty Prompt');
     }
     onLogin(email, password);

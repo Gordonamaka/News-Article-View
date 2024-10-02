@@ -3,7 +3,7 @@ const router       = express();
 const { Pool }     = require('pg');
 const { dbParams } = require('../../db/params/dbParams');
 
-// Input News Data into PSQL Table
+
 const pool = new Pool(dbParams);
 
 // endpoint to run a select to fetch a users favourites with a specific article id

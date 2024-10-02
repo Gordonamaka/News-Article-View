@@ -4,7 +4,6 @@ const router          = express();
 const { Pool }        = require('pg');
 const cookieSession   = require('cookie-session');
 const { dbParams }    = require('../../db/params/dbParams');
-const { addArticle }  = require('../../db/queries/articles');
 
 const pool = new Pool(dbParams);
 
@@ -29,7 +28,7 @@ router.post('/', (req, res) => {
       SELECT *
       FROM users
       WHERE email = $1
-      `, [email]
+      `, [inputEmail]
     )
     .then((result) => {
       const dBEmail = result.rows[0].email;
@@ -41,7 +40,7 @@ router.post('/', (req, res) => {
         
         if (inputPassword === dBPassword) {
           req.session.user_id = dBUser;
-          console.log(dBUser);
+          console.log('User ID', dBUser);
           // addArticle(dBUser);
           res.status(200).send('Officially logged in');
         } else if (result === false) {

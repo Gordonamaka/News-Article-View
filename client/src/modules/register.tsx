@@ -2,20 +2,26 @@ import React, { useState } from "react";
 import '../styles/registerModule.css'
 
 interface RegisterInputProps {
-  onRegister: (email: string, 
-               password: string) => void;
+  onRegister: (
+  email: string, 
+  password: string,
+  firstName: string,
+  lastName: string) => void;
 }
 
 const RegisterForm:React.FC<RegisterInputProps> = ({ onRegister }) => {
+  // Refactor into State Object
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-
+  const [firstName, setFirstName] = useState<string>('');
+  const [lastName, setLastName] = useState<string>('');
+  
   const postRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // May remove to reload with user logged in (?)
-    if (email || password === '') {
+    if (firstName === '' || lastName === '' || email === '' || password === '') {
       return console.log('Empty Prompt');
     }
-    onRegister(email, password);
+    onRegister(firstName, lastName, email, password, );
   };
 
   function openForm() {
@@ -37,6 +43,33 @@ const RegisterForm:React.FC<RegisterInputProps> = ({ onRegister }) => {
           <form className="register-container" onSubmit={postRegister}>
             
             <h1>Register</h1>   
+
+            <label>
+              <b>First Name</b>
+            </label>
+            <input
+            id="firstName" 
+            type="text"
+            className="firstName-input" 
+            placeholder="Enter First Name" 
+            name="firstName" 
+            aria-label="First Name"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)} 
+            required/>
+
+            <label>
+              <b>Last Name</b>
+            </label>
+            <input 
+            type="text"
+            className="lastName-input" 
+            placeholder="Enter Last Name" 
+            name="lastName" 
+            aria-label="Last Name"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)} 
+            required/>
 
             <label>
               <b>Email</b>
