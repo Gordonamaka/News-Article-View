@@ -1,31 +1,23 @@
-import React from 'react';
-import axios from 'axios';
-import { Readability } from '@mozilla/readability';
+import React, {useState, useEffect} from 'react';
+import { FetchContent } from '../functions/fetchContent';
+
 
 const ArticleDetail: React.FC = () => {
   const article = JSON.parse(localStorage.getItem('currentArticle') || 'null');
+  const [articleContent, setArticleContent] = useState<string | null>(null);
 
-  console.log(article);
+  // Fetch Full article content as per API docs
+  useEffect(() => {
+    if (article.url) {
+      FetchContent(article).then((content) => {
+        setArticleContent(content);
+      });
+    }
+  }, [article]);
+
   if (!article) {
     return <p>Article not found. Please go back and select an article.</p>;
   }
-
-  // Request for Full Content of Article Details
-  // CAN'T USE IN REACT, NEED TO FIND ANOTHER LIBRARY OR MAKE A REQUEST TO SERVER...
-  // const response2 = axios.get(article.url);
-  // console.log("Response2", response2);
-  
-  // We now have the article HTML, but before we can use Readability to locate the article content we need jsdom to convert it into a DOM object
-  // let dom = new JSDOM(response2.data, {
-  //   url: mockData.url
-  // });
-
-  // now pass the DOM document into readability to parse
-  // let content = new Readability(dom.window.document).parse();
-
-  // Done! The article content is in the textContent property
-  // console.log(content.textContent);
-
 
   return (
     <div>
@@ -49,7 +41,7 @@ const ArticleDetail: React.FC = () => {
         {article.description}
       </p>
       <p>
-        {article.content}
+        {articleContent}
       </p>
     </div>
   );

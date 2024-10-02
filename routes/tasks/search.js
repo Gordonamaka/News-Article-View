@@ -24,7 +24,7 @@ router.post("/", async (req, res) => {
     const response         = await axios.get(
       `https://newsapi.org/v2/everything?` + 
       `q=${keyword}&` +
-      `from=2024-09-01&` +
+      `from=2024-09-07&` +
       `excludeDomains=yahoo.com&` +
       `language=en&` +
       `pageSize=25&` +

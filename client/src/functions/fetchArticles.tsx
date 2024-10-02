@@ -1,6 +1,6 @@
 export const FetchArticles = async (symbol: string, pageNumber: number) => {
   try {
-    const response = await fetch('/search', {
+    const response = await fetch('/tasks/search', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

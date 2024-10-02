@@ -14,7 +14,7 @@ router.get("/", async (req, res) => {
     const response         = await axios.get(
       `https://newsapi.org/v2/everything?` + 
       `q=${keyword}&` +
-      `from=2024-09-25&` +
+      `from=2024-09-07&` +
       `excludeDomains=yahoo.com&` +
       `language=en&` +
       `pageSize=25&` +
@@ -25,9 +25,6 @@ router.get("/", async (req, res) => {
     
     // Total Results/Pages for Pagination
     const totalResults = response.data.totalResults;
-    console.log(totalResults);
-    let totalPages = Math.ceil(totalResults / 25);
-    console.log(totalPages);
 
     // Article Formatter
     const articlesJSON    = response.data.articles;
