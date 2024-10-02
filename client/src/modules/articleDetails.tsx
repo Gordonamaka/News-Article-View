@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { FetchContent } from '../functions/fetchContent';
+import '../styles/articleDetails.css'
 
 
 const ArticleDetail: React.FC = () => {
@@ -20,29 +21,45 @@ const ArticleDetail: React.FC = () => {
   }
 
   return (
-    <div>
-      <h1>
-        {article.title}
-      </h1>
-      <img 
-      src={article.urlToImage} 
-      alt={article.title} 
-      />
-      <p>
-        {article.source.name}
-      </p>
-      <p>
-        {article.publishedAt}
-        </p>
-      <a href={article.url} target="_blank" rel="noopener noreferrer">
-        Read full article
+    <div id='details-page'>
+      <a href='/' className='return-link'>
+        {'< Return'}
       </a>
-      <p>
-        {article.description}
-      </p>
-      <p>
-        {articleContent}
-      </p>
+      <article className='container'>
+        <p id='details-source'>
+          <a id='source-url' href={article.url}>
+          Source: {article.source.name}
+          </a>
+        </p>
+        
+        <h1 id="details-title">
+          {article.title}
+        </h1>
+
+        <h2 id='details-desc'>
+          {article.description}
+        </h2>
+
+        <p className='date-author'>
+          By: {article.author} | Date: {article.publishedAt}
+        </p>
+
+        <img id="details-img" 
+        src={article.urlToImage} 
+        alt={''} 
+        />
+
+        <a id='details-url' 
+          href={article.url} 
+          target="_blank" 
+          rel="noopener noreferrer">
+          Read Original Full Article Here
+        </a>
+        
+        <p id='details-content'>
+          {articleContent}
+        </p>
+      </article>
     </div>
   );
 };
