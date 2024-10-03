@@ -19,17 +19,16 @@ interface ArticleType {
 }
 
 const ArticleList: React.FC = () => {
-  // Refactor: Construct all states as a single object, then deconstruct when used.
+  // Refactor: Construct all states as a single object, then deconstruct.
   const [articleData, setArticleData] = useState<ArticleType[]>([]);
   const [totalResults, setTotalResults] = useState<number>(0);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [currentSymbol, setCurrentSymbol] = useState<string>('');
-  // const [user, setUser] = useState(); 
+  // const [user, setUser] = useState<UserType[]>([]); 
 
   const handleFetchArticles = async (symbol: string) => {
     // Clear articleData before fetching new articles
     setArticleData([]);
-
     const articles = await FetchArticles(symbol, 1);
     setCurrentSymbol(articles[0]); // Retain the current Symbol sent to API
     setCurrentPage(articles[1]); // Set the page that is returned by POST

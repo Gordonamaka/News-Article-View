@@ -43,7 +43,7 @@ router.post("/", async (req, res) => {
         article.publishedAt = article.publishedAt.split('T')[0];
       }
     });
-    res.status(200).send([ symbol, page, totalResults, filteredJSON]);
+    res.status(200).send([ symbol, page, totalResults, filteredJSON ]);
   } catch (err) {
     console.error(err);
     res.status(500).send({ error: "Failed to fetch articles" });

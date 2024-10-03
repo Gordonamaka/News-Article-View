@@ -12,11 +12,9 @@ export const RegisterUser = async (firstName: string, lastName: string, email: s
       throw new Error(`Response status: ${response.status}`);
     } else if (response.status === 200) {
       console.log('Successfully Registered User...')
-      // Do something? Log in Registered User 
     }
     const data = await response.json();
-    console.log(data);
-    return data;
+    return alert(`Successfully registered ${data.firstName}! Please Login to save your favourite articles!`);
   } catch (error) {
     if (error instanceof Error) {
       console.error(error.message);

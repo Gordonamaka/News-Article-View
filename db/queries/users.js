@@ -1,8 +1,7 @@
 require('dotenv').config();
-const { Pool }     = require('pg');
-const { dbParams } = require('../params/dbParams');
+const { Pool }        = require('pg');
+const { dbParams }    = require('../params/dbParams');
 // const bcrypt = require("bcrypt");
-
 
 const pool = new Pool(dbParams);
 
@@ -15,7 +14,6 @@ exports.addUser = async function(values) {
   // Hashing for Security - Set aside for time
   // const password = values.password;
   // const hashedPassword = bcrypt.hashSync(password, 10);
-  console.log(values)
   return await pool
     .query(
       `
@@ -31,7 +29,7 @@ exports.addUser = async function(values) {
       ]
     )
     .then((result) => {
-      console.log("Successfully added new user");
+      console.log("Successfully added new user", result.rows[0]);
       return result.rows[0];
     })
     .catch((err) => {

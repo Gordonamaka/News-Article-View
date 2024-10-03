@@ -15,7 +15,7 @@ export const LoginUser = async (email: string, password: string) => {
       // Do something? Put search or logged in search another page?
     }
     const data = await response.json();
-    console.log(data);
+    console.log('Response', data);
     return data;
   } catch (error) {
     if (error instanceof Error) {

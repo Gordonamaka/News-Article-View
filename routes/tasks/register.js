@@ -6,8 +6,8 @@ const { addUser }   = require('../../db/queries/users');
 
 const pool = new Pool(dbParams);
 
-router.post('/', (req, res) => {
-  return pool
+router.post('/', async (req, res) => {
+  return await pool
     .query(
       `
       SELECT *
@@ -22,6 +22,7 @@ router.post('/', (req, res) => {
         res.status(401).send({message: 'A user with this email or username already exists.'});
       } else {
         addUser(req.body);
+        res.status(201).send(req.body);
       }
     })
     .catch((err) => {

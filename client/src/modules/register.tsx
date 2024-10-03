@@ -17,11 +17,12 @@ const RegisterForm:React.FC<RegisterInputProps> = ({ onRegister }) => {
   const [lastName, setLastName] = useState<string>('');
   
   const postRegister = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); // May remove to reload with user logged in (?)
-    if (firstName === '' || lastName === '' || email === '' || password === '') {
+    e.preventDefault();
+    if (!firstName|| !lastName|| !email || !password) {
       return console.log('Empty Prompt');
     }
-    onRegister(firstName, lastName, email, password, );
+    onRegister(firstName, lastName, email, password);
+    closeForm();
   };
 
   function openForm() {
@@ -75,7 +76,7 @@ const RegisterForm:React.FC<RegisterInputProps> = ({ onRegister }) => {
               <b>Email</b>
             </label>
             <input
-            id="email" 
+            id="email-reg" 
             type="text"
             className="email-input" 
             placeholder="Enter Email" 
@@ -102,7 +103,7 @@ const RegisterForm:React.FC<RegisterInputProps> = ({ onRegister }) => {
               Register
             </button>
 
-            <button id="close" className="close-btn" onClick={closeForm}>
+            <button id="close-reg" className="close-btn" onClick={closeForm}>
               Close
             </button>
           </form>

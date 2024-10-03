@@ -12,8 +12,8 @@ const LoginForm:React.FC<LoginInputProps> = ({ onLogin }) => {
   const [password, setPassword] = useState<string>('');
 
   const postLogin = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); // May remove to reload with user logged in (?)
-    if (email === '' || password === '') {
+    e.preventDefault();
+    if ( !email || !password ) {
       return console.log('Empty Prompt');
     }
     onLogin(email, password);
@@ -43,7 +43,7 @@ const LoginForm:React.FC<LoginInputProps> = ({ onLogin }) => {
               <b>Email</b>
             </label>
             <input
-            id="email" 
+            id="email-log" 
             type="text"
             className="email-input" 
             placeholder="Enter Email" 
@@ -70,7 +70,7 @@ const LoginForm:React.FC<LoginInputProps> = ({ onLogin }) => {
               Login
             </button>
 
-            <button id="close" className="close-btn" onClick={closeForm}>
+            <button id="close-log" className="close-btn" onClick={closeForm}>
               Close
             </button>
           </form>
