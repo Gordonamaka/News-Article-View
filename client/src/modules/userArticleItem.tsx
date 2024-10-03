@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import '../styles/global.css';
 import { AddArticles } from '../functions/favArticle';
+import '../styles/global.css';
 
 interface itemProps {
   publishedAt: string,
@@ -12,7 +12,7 @@ interface itemProps {
   article: any,
 }
 
-export const ArticleItem: React.FC<itemProps> = ({ publishedAt, source, title, description, url, urlToImage, article }) => {
+export const UserArticleItem: React.FC<itemProps> = ({ publishedAt, source, title, description, url, urlToImage, article }) => {
 
   const [favourite, setFavourite] = useState<any>([]);
 
@@ -54,7 +54,7 @@ export const ArticleItem: React.FC<itemProps> = ({ publishedAt, source, title, d
             {/* Favourite Article */}
           <button className='btn favourite-btn'
           type='button' onClick={handleFavourite}>
-            Favourite
+            Un-Favourite
           </button>
         </div>
       </div>
@@ -64,4 +64,4 @@ export const ArticleItem: React.FC<itemProps> = ({ publishedAt, source, title, d
 }
 
 
-export default ArticleItem
+export default UserArticleItem

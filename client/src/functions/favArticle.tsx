@@ -1,4 +1,4 @@
-export const AddArticles = async (date: string,
+export const AddArticles = async (publishedAt: string,
   source: string,
   author: string,
   title: string,
@@ -11,7 +11,7 @@ export const AddArticles = async (date: string,
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ date, source, author, title, description, url, urlToImage }),
+      body: JSON.stringify({ publishedAt, source, author, title, description, url, urlToImage }),
     });
 
     if (!response.ok) {

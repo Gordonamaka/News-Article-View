@@ -36,7 +36,6 @@ router.post('/', (req, res) => {
         if (inputPassword === dBPassword) {
           let loggedUser = result.rows[0]
           req.session.user_id = dBUser;
-          console.log('User ID', dBUser);
           res.status(200).send(loggedUser);
         } else if (result === false) {
           res.status(401).send('Username or Password is incorrect');

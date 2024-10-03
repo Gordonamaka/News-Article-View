@@ -10,16 +10,16 @@
 
 .user {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   position: absolute;
-  top: 23px;
+  top: 0px;
   right: 28px;
 }
 
 #favourite-page-btn {
   margin-left: 1rem;
-  align-content: center;
-  padding: 0.5rem 1rem 0.5rem 1rem;
+  text-align: center;
+  padding: 0.5rem 0.25rem 0.5rem 0.25rem;
   text-decoration: none;
 }
 

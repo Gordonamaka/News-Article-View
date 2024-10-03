@@ -18,7 +18,6 @@ export const FetchContent = async (article: ArticleUrl): Promise<string | null> 
     const content = new Readability(doc).parse();
 
     // The article content is in the textContent property as per NewsApi docs
-    console.log('Logged Content',content?.textContent);
     return content?.textContent || null;
   } catch (error) {
     console.error('Error fetching article content:', error);

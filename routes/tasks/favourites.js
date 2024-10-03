@@ -1,60 +1,73 @@
-const express      = require('express');
-const router       = express();
-const { Pool }     = require('pg');
-const { dbParams } = require('../../db/params/dbParams');
+const express          = require('express');
+const router           = express();
+const { Pool }         = require('pg');
+const { dbParams }     = require('../../db/params/dbParams');
+const renameProperties = require('../../lib/propertyCaseFormatter')
 
 
 const pool = new Pool(dbParams);
 
-// endpoint to run a select to fetch a users favourites with a specific article id
-// router.get('/id', (req, res) => {
+// endpoint to run a select to fetch a users favourites with a specific article id held inSession
+router.get('/articles', (req, res) => {
+  const currentUser = req.session.user_id;
+  
+  if (!currentUser) {
+    return res.status(401).send('User not logged in');
+  }
 
-//   const currentUser = req.session.user_id;
-//   console.log("Current User is:", currentUser);
-
-//   if (currentUser) {
-//     pool
-//     .query(
-
-//       `SELECT * FROM articles WHERE user_id = ${currentUser};`
-
-//     )
-//     .then((results) => {
-//       const articles = results.rows;
-//       res.json({ articles });
-//     })
-//     .catch((err) => {
-//       console.log(err.message);
-//     });
-//   // return router;
-//   } else {
-//     res.status(404).send('Cannot GET /');
-//   };
-// });
+  return pool
+    .query(
+      `
+      SELECT * FROM articles WHERE user_id = $1;
+      `,
+      [currentUser]
+    )
+    .then((results) => {
+      const articles = results.rows;
+      // Case formatter
+      const formattedArticles = renameProperties(articles);
+      console.log(formattedArticles);
+      if (formattedArticles.length > 0) {
+        // Date Formatter
+        formattedArticles.forEach(article => {
+          if (article.publishedAt) {
+            article.publishedAt = new Date(article.publishedAt).toISOString().split('T')[0]; 
+          }
+        });
+        res.status(200).json(formattedArticles);
+      } else {
+        res.status(404).send('No articles found for this user.');
+      }
+    })
+    .catch((err) => {
+      console.error(err.message);
+      res.status(500).send('Server error: ' + err.message);
+    });
+});
 
 router.post("/", async (req, res) => {
   const currentUser = req.session.user_id;
   return await pool
     .query(
       `
-        INSERT INTO articles (user_id, date, source, author, title, description, url, urlToImage)
+        INSERT INTO articles (user_id, publishedAt, source, author, title, description, url, urlToImage)
         VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
         RETURNING *;
         `,
       [currentUser, 
-       req.body.date, 
-       req.body.source, 
+       req.body.publishedAt, 
+       req.body.source.name, 
        req.body.author, 
        req.body.title, 
        req.body.description, 
        req.body.url, 
        req.body.urlToImage]
     )
-    .then((result) => {
-      console.log('DB Result', result.rows[0]);
-      let article = result.rows[0]; 
-      res.status(201).send(article);
-      return result.rows[0];
+    .then((results) => {
+      console.log('DB Result', results.rows[0]);
+      let article = results.rows[0]; 
+      res.status(201).json(article);
+      return results.rows[0];
     })
     .catch((err) => {
       res.status(404).send("addarticle error = " + err.message);

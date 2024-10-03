@@ -11,6 +11,7 @@ const pool = new Pool(dbParams);
  * @returns Newly favourited article
 **/
 
+// Unused - Reference Only
 exports.addArticle = function(values, userId) {
   
   console.log(values);
@@ -20,7 +21,7 @@ exports.addArticle = function(values, userId) {
       INSERT INTO articles (user_id, source_name, author, title, description, url, urlToImage, published_at, content)
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
       RETURNING *;
-      `, // Check RETURNING *
+      `,
       [
         userId,
         values.source.name,

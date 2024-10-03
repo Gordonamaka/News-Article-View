@@ -88,7 +88,7 @@ const ArticleList: React.FC = () => {
               <ArticleItem
                 key={article.url}
                 source={article.source.name}
-                date={article.publishedAt}
+                publishedAt={article.publishedAt}
                 title={article.title}
                 description={article.description}
                 url={article.url}
