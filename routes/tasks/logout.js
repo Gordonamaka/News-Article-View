@@ -1,8 +1,6 @@
 require('dotenv').config({ path: '../.env' });
 const express       = require('express');
 const router        = express();
-const { Pool }      = require('pg');
-const { dbParams }  = require('../../db/params/dbParams');
 const cookieSession = require('cookie-session');
 
 router.use(cookieSession({

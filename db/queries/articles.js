@@ -47,20 +47,27 @@ exports.addArticle = function(values, userId) {
  * Delete a favourtied Article
  * @param {*} id
  * @returns {Promise<{}>} A promise to the user.
- */
-exports.deleteArticle = function(articleId) {
-
-  const id = Number(articleId);
+*/
+exports.deleteArticle = function(articleId, userId) {
   return pool
-  .query(
+    .query(
       `
       DELETE FROM articles
-      WHERE id = ${id};`
-  )
-  .then((res) => {
-      console.log(`The Article has been deleted.`);
-  })
-  .catch((err) => {
-      console.log('Sorry, we were not able to delete the article...' + err.message);
-  })
+      WHERE id = $1 AND user_id = $2
+      RETURNING *;
+      `,
+      [articleId, userId]
+    )
+    .then((result) => {
+      if (result.rowCount > 0) {
+        console.log(`The Article with id ${articleId} has been deleted.`);
+        return { message: 'Article deleted successfully' };
+      } else {
+        return { message: 'Article not found, you do not have permission to unfavourite it, or cannot be unfavourited' };
+      }
+    })
+    .catch((err) => {
+      console.log('Error deleting article: ' + err.message);
+      throw err;
+    });
 };

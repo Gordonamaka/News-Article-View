@@ -1,8 +1,9 @@
-const express          = require('express');
-const router           = express();
-const { Pool }         = require('pg');
-const { dbParams }     = require('../../db/params/dbParams');
-const renameProperties = require('../../lib/propertyCaseFormatter')
+const express              = require('express');
+const router               = express();
+const { Pool }             = require('pg');
+const { dbParams }         = require('../../db/params/dbParams');
+const { deleteArticle }    = require('../../db/queries/articles')
+const renameProperties     = require('../../lib/propertyCaseFormatter');
 
 
 const pool = new Pool(dbParams);
@@ -26,7 +27,6 @@ router.get('/articles', (req, res) => {
       const articles = results.rows;
       // Case formatter
       const formattedArticles = renameProperties(articles);
-      console.log(formattedArticles);
       if (formattedArticles.length > 0) {
         // Date Formatter
         formattedArticles.forEach(article => {
@@ -64,13 +64,33 @@ router.post("/", async (req, res) => {
        req.body.urlToImage]
     )
     .then((results) => {
-      console.log('DB Result', results.rows[0]);
       let article = results.rows[0]; 
       res.status(201).json(article);
       return results.rows[0];
     })
     .catch((err) => {
       res.status(404).send("addarticle error = " + err.message);
+    });
+});
+
+router.delete('/articles/:articleId', (req, res) => {
+  const articleId = req.params.articleId;
+  const currentUser = req.session.user_id;
+
+  if (!currentUser) {
+    return res.status(401).json({ message: 'Unauthorized: Please log in first.' });
+  }
+
+  deleteArticle(articleId, currentUser)
+    .then((response) => {
+      if (response.message === 'Article deleted successfully') {
+        return res.status(200).json({ message: response.message });
+      } else {
+        return res.status(404).json({ message: response.message });
+      }
+    })
+    .catch((err) => {
+      res.status(500).json({ message: 'Server error: ' + err.message });
     });
 });
 

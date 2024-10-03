@@ -4,7 +4,8 @@ import { FetchFavourites } from '../functions/fetchFavourites';
 import '../styles/global.css'
 
 interface ArticleType {
-  source: { name: string };
+  id: number;
+  source: string;
   publishedAt: string;
   title: string;
   description: string;
@@ -21,12 +22,11 @@ const FavouritesPage: React.FC = () => {
   useEffect(() => {
     FetchFavourites().then((content) => {
       setArticleData(content);
-      console.log('Specific Content', content);
+      console.log(content);
       setLoading(false);
     }).catch(() => setLoading(false));
   }, []);
 
-  console.log('Entire-State', articleData);
   
   return (
     <div>
@@ -36,8 +36,9 @@ const FavouritesPage: React.FC = () => {
         <div className='article-container'>
           {articleData.map((article) => (
             <UserArticleItem
-              key={article.url}
-              source={article.source.name}
+              key={article.id}
+              articleId={article.id}
+              source={article.source}
               publishedAt={article.publishedAt}
               title={article.title}
               description={article.description}

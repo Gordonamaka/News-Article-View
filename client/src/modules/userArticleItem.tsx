@@ -1,8 +1,9 @@
-import React, {useState} from 'react';
-import { AddArticles } from '../functions/favArticle';
+import React from 'react';
 import '../styles/global.css';
+import { UnfavouriteArticle } from '../functions/unFavArticle';
 
 interface itemProps {
+  articleId: number,
   publishedAt: string,
   source: string,
   title: string,
@@ -12,10 +13,7 @@ interface itemProps {
   article: any,
 }
 
-export const UserArticleItem: React.FC<itemProps> = ({ publishedAt, source, title, description, url, urlToImage, article }) => {
-
-  const [favourite, setFavourite] = useState<any>([]);
-
+export const UserArticleItem: React.FC<itemProps> = ({ articleId, publishedAt, source, title, description, url, urlToImage, article }) => {
   // Will use local storage over useNavigate to open details within memory in a new tab, else the search restarts.
   const handleDetailsRedirect = () => {
     // Save memory
@@ -25,11 +23,20 @@ export const UserArticleItem: React.FC<itemProps> = ({ publishedAt, source, titl
   };
 
  
-  const handleFavourite = async () => {
-    const addToFav = await AddArticles(article.publishedAt, article.source, article.author, article.title, article.description, article.url, article.urlToImage);
-    // May cause errors, requires refactor.
-    setFavourite(addToFav)
-  }
+  const handleUnFavourite = async () => {
+    try {
+      const response = await UnfavouriteArticle(articleId);
+      if (response.ok) {
+        console.log(`Article with id ${articleId} was successfully unfavourited.`);
+        alert('Article successfully deleted from favourite list!')
+        window.location.reload(); // Reload the page to update the list
+      } else {
+        console.error('Failed to unfavourite the article.');
+      }
+    } catch (err) {
+      console.error('Error unfavouriting article:', err);
+    }
+  };
 
   return (
     <div className='article-app'>
@@ -51,9 +58,9 @@ export const UserArticleItem: React.FC<itemProps> = ({ publishedAt, source, titl
           <button className='btn details-btn' onClick={handleDetailsRedirect}>
             Details
           </button>
-            {/* Favourite Article */}
+            {/* Un-Favourite Article */}
           <button className='btn favourite-btn'
-          type='button' onClick={handleFavourite}>
+          type='button' onClick={handleUnFavourite}>
             Un-Favourite
           </button>
         </div>
