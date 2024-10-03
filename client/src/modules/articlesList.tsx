@@ -53,8 +53,13 @@ const ArticleList: React.FC = () => {
 
   const handleLogin = async (email: string, password: string) => {
     const userData = await LoginUser(email, password);
-    setUser(userData);
-    setLoginStatus(true);
+
+    if (userData) {
+      setUser(userData);
+      setLoginStatus(true);
+    } else {
+      setLoginStatus(false);
+    }
   };
 
   return (

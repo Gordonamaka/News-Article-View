@@ -12,8 +12,8 @@ router.get(`/`, (req, res) => {
       SELECT * FROM USERS;
       `
     )
-    .then((results) => {
-      const users = results.rows;
+    .then((result) => {
+      const users = result.rows;
       res.json({ users });
     })
     .catch((err) => {

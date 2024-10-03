@@ -8,18 +8,20 @@ export const LoginUser = async (email: string, password: string) => {
       body: JSON.stringify({ email: `${email}`, password: `${password}` }),
     });
 
-    if (!response.ok) {
-      throw new Error(`Response status: ${response.status}`);
-    } else if (response.status === 200) {
-      console.log('Successfully Logged in!');
+    if (response.status === 401) {
+      return alert('Incorrect username or password. Please try again.');
     }
-    const data = await response.json();
-    // console.log('Response', data);
-    return data;
+
+    if (response.status === 200) {
+      const data = await response.json();
+      return data;
+    }
+
+    throw new Error(`Response status: ${response.status}`);
   } catch (error) {
     if (error instanceof Error) {
       console.error(error.message);
     }
-    return console.log('An Error occurred.')
+    alert('An error occurred. Please try again.');
   }
 };

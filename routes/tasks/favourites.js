@@ -26,10 +26,10 @@ router.post("/", async (req, res) => {
        req.body.url, 
        req.body.urlToImage]
     )
-    .then((results) => {
-      let article = results.rows[0]; 
+    .then((result) => {
+      let article = result.rows[0]; 
       res.status(201).json(article);
-      return results.rows[0];
+      return result.rows[0];
     })
     .catch((err) => {
       res.status(404).send("addarticle error = " + err.message);
@@ -72,8 +72,8 @@ router.get('/articles', (req, res) => {
       `,
       [currentUser]
     )
-    .then((results) => {
-      const articles = results.rows;
+    .then((result) => {
+      const articles = result.rows;
       // Case formatter
       const formattedArticles = renameProperties(articles);
       if (formattedArticles.length > 0) {
