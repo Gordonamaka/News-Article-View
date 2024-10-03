@@ -85,12 +85,14 @@ const ArticleList: React.FC = () => {
         ) : (
           <div className='user'>
             <p><b>Welcome, {user.first_name} {user.last_name}!</b></p>
-            <a id='favourite-page-btn' href='/favourites' target='_blank' rel='noreferrer' className='btn'>
-              Favourites
-            </a>
-            <button id='logout' className='btn' onClick={handleLogout}>
-              Logout
-            </button>
+            <div className='user-btn-area'>
+              <a id='favourite-page-btn' href='/favourites' target='_blank' rel='noreferrer' className='btn'>
+                Favourites
+              </a>
+              <button id='logout' className='btn' onClick={handleLogout}>
+                Logout
+              </button>
+            </div>
           </div>
         )}
         
