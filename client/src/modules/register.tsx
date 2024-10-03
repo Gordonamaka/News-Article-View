@@ -103,7 +103,7 @@ const RegisterForm:React.FC<RegisterInputProps> = ({ onRegister }) => {
               Register
             </button>
 
-            <button id="close-reg" className="close-btn" onClick={closeForm}>
+            <button id="close-reg" className="close-btn" type="button" onClick={closeForm}>
               Close
             </button>
           </form>

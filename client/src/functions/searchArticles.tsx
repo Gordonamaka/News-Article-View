@@ -1,4 +1,4 @@
-export const FetchArticles = async (symbol: string, pageNumber: number) => {
+export const SearchArticles = async (symbol: string, pageNumber: number) => {
   try {
     const response = await fetch('/tasks/search', {
       method: 'POST',

@@ -3,7 +3,7 @@ import ArticleItem from './articleItem';
 import SearchInput from './articleSearch';
 import LoginForm from './login';
 import RegisterForm from './register';
-import { FetchArticles } from '../functions/fetchArticles';
+import { SearchArticles } from '../functions/searchArticles';
 import { LoginUser } from '../functions/loginUser';
 import { RegisterUser } from '../functions/registerUser';
 import PaginationElement from './pagination';
@@ -32,10 +32,10 @@ const ArticleList: React.FC = () => {
   const [user, setUser] = useState<UserType | null>(null); 
   const [loginStatus, setLoginStatus] = useState<boolean>(false); 
 
-  const handleFetchArticles = async (symbol: string) => {
+  const handleSearch = async (symbol: string) => {
     // Clear articleData before fetching new articles
     setArticleData([]);
-    const articles = await FetchArticles(symbol, 1);
+    const articles = await SearchArticles(symbol, 1);
     setCurrentSymbol(articles[0]); // Retain the current Symbol sent to API
     setCurrentPage(articles[1]); // Set the page that is returned by POST
     setTotalResults(articles[2]); // Set the total number of articles by keyword
@@ -43,7 +43,7 @@ const ArticleList: React.FC = () => {
   };
 
   const handlePagination = async (newPage: number) => {
-    const nextArticles = await FetchArticles(currentSymbol, newPage);
+    const nextArticles = await SearchArticles(currentSymbol, newPage);
     setCurrentSymbol(nextArticles[0]);
     setCurrentPage(nextArticles[1]);
     setTotalResults(nextArticles[2]);
@@ -61,7 +61,7 @@ const ArticleList: React.FC = () => {
     <div className='article-page'>
       <h1 id='page-title'> News App</h1>
       <div className='nav'>
-        <SearchInput onSearch={handleFetchArticles} loggedIn={loginStatus}/>
+        <SearchInput onSearch={handleSearch} loggedIn={loginStatus}/>
         
         {!user ? (
           <div>
@@ -70,7 +70,10 @@ const ArticleList: React.FC = () => {
           </div>
         ) : (
           <div className='user'>
-            <p><b>Welcome, {user.first_name}, {user.last_name}!</b></p>
+            <p><b>Welcome, {user.first_name} {user.last_name}!</b></p>
+            <a id='favourite-page-btn' href='/favourites' target='_blank' rel='noreferrer' className='btn'>
+              Favourites
+            </a>
           </div>
         )}
         

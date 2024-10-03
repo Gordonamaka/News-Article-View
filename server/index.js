@@ -57,7 +57,7 @@ app.use('/tasks/register', registerRoute);
 const loginRoute = require('../routes/tasks/login');
 app.use('/tasks/login', loginRoute);
 
-// Favourites Endpoint -- Need to map with an :id param
+// Add Favourites
 const articleFavouritesRoute = require('../routes/tasks/favourites');
 app.use('/tasks/favourites', articleFavouritesRoute);
 

@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {useState} from 'react';
 import '../styles/global.css';
+import { AddArticles } from '../functions/favArticle';
 
 interface itemProps {
   date: string,
@@ -13,6 +14,8 @@ interface itemProps {
 
 export const ArticleItem: React.FC<itemProps> = ({ date, source, title, description, url, urlToImage, article }) => {
 
+  const [favourite, setFavourite] = useState<any>([]);
+
   // Will use local storage over useNavigate to open details within memory in a new tab, else the search restarts.
   const handleDetailsRedirect = () => {
     // Save memory
@@ -22,7 +25,11 @@ export const ArticleItem: React.FC<itemProps> = ({ date, source, title, descript
   };
 
   // ** Disable Favourite Btn if user is not logged in.
-
+  const handleFavourite = async () => {
+    const addToFav = await AddArticles(article.publishedAt, article.source, article.author, article.title, article.description, article.url, article.urlToImage);
+    // May cause errors, requires refactor.
+    setFavourite(addToFav)
+  }
 
   return (
     <div className='article-app'>
@@ -46,7 +53,7 @@ export const ArticleItem: React.FC<itemProps> = ({ date, source, title, descript
           </button>
             {/* Favourite Article */}
           <button className='btn favourite-btn'
-          type='submit'>
+          type='button' onClick={handleFavourite}>
             Favourite
           </button>
         </div>

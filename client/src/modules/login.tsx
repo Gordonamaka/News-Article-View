@@ -70,7 +70,7 @@ const LoginForm:React.FC<LoginInputProps> = ({ onLogin }) => {
               Login
             </button>
 
-            <button id="close-log" className="close-btn" onClick={closeForm}>
+            <button id="close-log" className="close-btn" type="button" onClick={closeForm}>
               Close
             </button>
           </form>
