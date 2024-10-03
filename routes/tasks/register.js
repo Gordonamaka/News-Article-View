@@ -7,6 +7,13 @@ const { addUser }   = require('../../db/queries/users');
 const pool = new Pool(dbParams);
 
 router.post('/', async (req, res) => {
+  const email = req.body.email.trim();
+  const password = req.body.password.trim();
+
+  if (!email || !password) {
+    return res.status(400).send({ message: 'Email and password are required and cannot be empty.' });
+  }
+  
   return await pool
     .query(
       `
@@ -14,9 +21,9 @@ router.post('/', async (req, res) => {
       FROM users
       WHERE email = $1
       `,
-      [
-        req.body.email,
-      ])
+      [ 
+        email 
+    ])
     .then((result) => {
       if (result.rows[0]) {
         res.status(401).send({message: 'A user with this email or username already exists.'});

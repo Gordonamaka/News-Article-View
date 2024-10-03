@@ -22,6 +22,6 @@ export const LoginUser = async (email: string, password: string) => {
     if (error instanceof Error) {
       console.error(error.message);
     }
-    alert('An error occurred. Please try again.');
+    return alert('An error occurred. Please try again.');
   }
 };
