@@ -2,48 +2,11 @@ const express              = require('express');
 const router               = express();
 const { Pool }             = require('pg');
 const { dbParams }         = require('../../db/params/dbParams');
-const { deleteArticle }    = require('../../db/queries/articles')
+const { deleteArticle }    = require('../../db/queries/articles');
 const renameProperties     = require('../../lib/propertyCaseFormatter');
 
 
 const pool = new Pool(dbParams);
-
-// endpoint to run a select to fetch a users favourites with a specific article id held inSession
-router.get('/articles', (req, res) => {
-  const currentUser = req.session.user_id;
-  
-  if (!currentUser) {
-    return res.status(401).send('User not logged in');
-  }
-
-  return pool
-    .query(
-      `
-      SELECT * FROM articles WHERE user_id = $1;
-      `,
-      [currentUser]
-    )
-    .then((results) => {
-      const articles = results.rows;
-      // Case formatter
-      const formattedArticles = renameProperties(articles);
-      if (formattedArticles.length > 0) {
-        // Date Formatter
-        formattedArticles.forEach(article => {
-          if (article.publishedAt) {
-            article.publishedAt = new Date(article.publishedAt).toISOString().split('T')[0]; 
-          }
-        });
-        res.status(200).json(formattedArticles);
-      } else {
-        res.status(404).send('No articles found for this user.');
-      }
-    })
-    .catch((err) => {
-      console.error(err.message);
-      res.status(500).send('Server error: ' + err.message);
-    });
-});
 
 router.post("/", async (req, res) => {
   const currentUser = req.session.user_id;
@@ -93,6 +56,44 @@ router.delete('/articles/:articleId', (req, res) => {
       res.status(500).json({ message: 'Server error: ' + err.message });
     });
 });
+
+// Favourite Articles Endpoint for articles held in session.
+router.get('/articles', (req, res) => {
+  const currentUser = req.session.user_id;
+  
+  if (!currentUser) {
+    return res.status(401).send('User not logged in');
+  }
+
+  return pool
+    .query(
+      `
+      SELECT * FROM articles WHERE user_id = $1;
+      `,
+      [currentUser]
+    )
+    .then((results) => {
+      const articles = results.rows;
+      // Case formatter
+      const formattedArticles = renameProperties(articles);
+      if (formattedArticles.length > 0) {
+        // Date Formatter
+        formattedArticles.forEach(article => {
+          if (article.publishedAt) {
+            article.publishedAt = new Date(article.publishedAt).toISOString().split('T')[0]; 
+          }
+        });
+        res.status(200).json(formattedArticles);
+      } else {
+        res.status(404).send('No articles found for this user.');
+      }
+    })
+    .catch((err) => {
+      console.error(err.message);
+      res.status(500).send('Server error: ' + err.message);
+    });
+});
+
 
 
 module.exports = router;

@@ -22,10 +22,6 @@ router.get("/", async (req, res) => {
       `sortBy=relevancy&` +
       `apiKey=${API_KEY}`
     );
-    
-    // Total Results/Pages for Pagination
-    const totalResults = response.data.totalResults;
-
     // Article Formatter
     const articlesJSON    = response.data.articles;
     const filteredJSON    = articlesJSON.filter(obj => !Object.values(obj).includes("[Removed]"));
