@@ -18,13 +18,18 @@ interface ArticleType {
   urlToImage: string;
 }
 
+interface UserType {
+  first_name: string;
+  last_name: string;
+}
+
 const ArticleList: React.FC = () => {
   // Refactor: Construct all states as a single object, then deconstruct.
   const [articleData, setArticleData] = useState<ArticleType[]>([]);
   const [totalResults, setTotalResults] = useState<number>(0);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [currentSymbol, setCurrentSymbol] = useState<string>('');
-  // const [user, setUser] = useState<UserType[]>([]); 
+  const [user, setUser] = useState<UserType | null>(null); 
 
   const handleFetchArticles = async (symbol: string) => {
     // Clear articleData before fetching new articles
@@ -45,16 +50,27 @@ const ArticleList: React.FC = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const handleLogin = async (email: string, password: string) => {
+    const userData = await LoginUser(email, password);
+    setUser(userData);
+  };
+
   return (
     <div className='article-page'>
       <h1 id='page-title'> News App</h1>
       <div className='nav'>
         <SearchInput onSearch={handleFetchArticles} />
         
-        {/* Replace W/ user State once Registered */}
-        <RegisterForm onRegister={RegisterUser}/>
-        <LoginForm onLogin={LoginUser}/>
-        {/* Replace W/ user once Logged In */}
+        {!user ? (
+          <div>
+            <RegisterForm onRegister={RegisterUser}/>
+            <LoginForm onLogin={handleLogin}/>
+          </div>
+        ) : (
+          <div>
+            <p>Welcome, {user.first_name}, {user.last_name}!</p>
+          </div>
+        )}
         
         {currentSymbol.length > 0 && <h1 id="query">Showing {totalResults} Results for: {currentSymbol}</h1>}
       </div>

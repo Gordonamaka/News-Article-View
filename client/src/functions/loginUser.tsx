@@ -11,11 +11,10 @@ export const LoginUser = async (email: string, password: string) => {
     if (!response.ok) {
       throw new Error(`Response status: ${response.status}`);
     } else if (response.status === 200) {
-      console.log('Successfully Logged in!')
-      // Do something? Put search or logged in search another page?
+      console.log('Successfully Logged in!');
     }
     const data = await response.json();
-    console.log('Response', data);
+    // console.log('Response', data);
     return data;
   } catch (error) {
     if (error instanceof Error) {

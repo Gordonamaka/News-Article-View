@@ -14,12 +14,7 @@ router.use(cookieSession({
 }));
 
 
-router.post('/', (req, res) => {
-  console.log(req.body);
-  console.log('--------------------');
-  console.log(req.body.email);
-  console.log(req.body.password);  
-  
+router.post('/', (req, res) => {  
   const inputEmail = req.body.email;
   const inputPassword = req.body.password;
   return pool
@@ -39,10 +34,10 @@ router.post('/', (req, res) => {
         console.log('Success, currently matching passwords... Check client response tab or console for verification');
         
         if (inputPassword === dBPassword) {
+          let loggedUser = result.rows[0]
           req.session.user_id = dBUser;
           console.log('User ID', dBUser);
-          // addArticle(dBUser);
-          res.status(200).send('Officially logged in');
+          res.status(200).send(loggedUser);
         } else if (result === false) {
           res.status(401).send('Username or Password is incorrect');
         }
