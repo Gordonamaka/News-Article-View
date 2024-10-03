@@ -8,6 +8,12 @@
   place-content: center;
 }
 
+.user {
+  position: absolute;
+  top: 23px;
+  right: 28px;
+}
+
 .btn {
   background-color: #C20430;
   color: white;

@@ -3,9 +3,10 @@ import React, {useState} from "react";
 
 interface SearchInputProps {
   onSearch: (symbol: string) => void;
+  loggedIn: boolean;
 }
 
-const SearchInput: React.FC<SearchInputProps> = ({ onSearch }) => {
+const SearchInput: React.FC<SearchInputProps> = ({ onSearch, loggedIn }) => {
   const [symbol, setSymbol] = useState<string>('');
 
   const postSymbol = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -30,7 +31,7 @@ const SearchInput: React.FC<SearchInputProps> = ({ onSearch }) => {
           value={symbol}
           onChange={(e) => setSymbol(e.target.value)}
         />
-        <button id="postBtn" className="btn post-btn" type="submit">
+        <button id="postBtn" className="btn post-btn" disabled={!loggedIn} type="submit">
           Search
         </button>
       </form>

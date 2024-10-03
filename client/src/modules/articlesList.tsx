@@ -30,6 +30,7 @@ const ArticleList: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [currentSymbol, setCurrentSymbol] = useState<string>('');
   const [user, setUser] = useState<UserType | null>(null); 
+  const [loginStatus, setLoginStatus] = useState<boolean>(false); 
 
   const handleFetchArticles = async (symbol: string) => {
     // Clear articleData before fetching new articles
@@ -53,13 +54,14 @@ const ArticleList: React.FC = () => {
   const handleLogin = async (email: string, password: string) => {
     const userData = await LoginUser(email, password);
     setUser(userData);
+    setLoginStatus(true);
   };
 
   return (
     <div className='article-page'>
       <h1 id='page-title'> News App</h1>
       <div className='nav'>
-        <SearchInput onSearch={handleFetchArticles} />
+        <SearchInput onSearch={handleFetchArticles} loggedIn={loginStatus}/>
         
         {!user ? (
           <div>
@@ -67,8 +69,8 @@ const ArticleList: React.FC = () => {
             <LoginForm onLogin={handleLogin}/>
           </div>
         ) : (
-          <div>
-            <p>Welcome, {user.first_name}, {user.last_name}!</p>
+          <div className='user'>
+            <p><b>Welcome, {user.first_name}, {user.last_name}!</b></p>
           </div>
         )}
         
@@ -96,7 +98,11 @@ const ArticleList: React.FC = () => {
         </div>
       ) : (
         <div>
-          <h1>Waiting for user to search for Articles...</h1>
+          {!user ? 
+            <h1>Must be registered & logged in before searching for articles.</h1> 
+            : 
+            <h1>Waiting for user to search for Articles...</h1>
+          }
         </div>
       )}
     </div>
