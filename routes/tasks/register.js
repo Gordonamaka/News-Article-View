@@ -29,7 +29,7 @@ router.post('/', async (req, res) => {
         res.status(401).send({message: 'A user with this email or username already exists.'});
       } else {
         addUser(req.body);
-        res.status(201).send(req.body);
+        res.status(200).send(req.body);
       }
     })
     .catch((err) => {

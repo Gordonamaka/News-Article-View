@@ -24,12 +24,23 @@ export const ArticleItem: React.FC<itemProps> = ({ publishedAt, source, title, d
     window.open('/article', '_blank');
   };
 
- 
   const handleFavourite = async () => {
-    const addToFav = await AddArticles(article.publishedAt, article.source, article.author, article.title, article.description, article.url, article.urlToImage);
-    // May cause errors, requires refactor.
-    setFavourite(addToFav)
-  }
+    try {
+      await AddArticles(
+        article.publishedAt,
+        article.source,
+        article.author,
+        article.title,
+        article.description,
+        article.url,
+        article.urlToImage
+      );
+      alert('Article Favourited! You can view your favourite articles in your profile.');
+    } catch (error) {
+      alert('Failed to add the article to favourites. Please try again.');
+      console.error('Error adding article:', error);
+    }
+  };
 
   return (
     <div className='article-app'>
