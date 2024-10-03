@@ -6,6 +6,75 @@ const { addUser }   = require('../../db/queries/users');
 
 const pool = new Pool(dbParams);
 
+/**
+/**
+ * @swagger
+ * /tasks/register:
+ *   post:
+ *     summary: Registers a new user
+ *     tags: [Users]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 example: user@example.com
+ *               password:
+ *                 type: string
+ *                 example: strongPassword123
+ *             required:
+ *               - email
+ *               - password
+ *     responses:
+ *       200:
+ *         description: User successfully registered
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 email:
+ *                   type: string
+ *                   example: user@example.com
+ *                 password:
+ *                   type: string
+ *                   example: strongPassword123
+ *       400:
+ *         description: Bad request (email and password are required)
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Email and password are required and cannot be empty.
+ *       401:
+ *         description: User already exists
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: A user with this email or username already exists.
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Internal server error
+ */
 router.post('/', async (req, res) => {
   const email = req.body.email.trim();
   const password = req.body.password.trim();

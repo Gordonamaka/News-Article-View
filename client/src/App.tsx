@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import ArticleList from './modules/articlesList'; // Ensure this path is correct
+import ArticleList from './modules/articlesList';
 import ArticleDetail from './modules/articleDetails';
 import FavouritesPage from './modules/favouritesPage';
 import './styles/global.css';

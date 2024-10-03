@@ -6,12 +6,34 @@ const bodyParser    = require('body-parser');
 const app           = express();
 const PORT          = process.env.PORT;
 const cookieSession = require('cookie-session');
+const swaggerJsDoc  = require('swagger-jsdoc');
+const swaggerUi     = require('swagger-ui-express');
 
 const corsOptions = {
   origin: '*',
   methods: ['GET', 'POST'],        
   allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept'], 
 };
+
+const swaggerOptions = {
+  swaggerDefinition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'news-app',
+      version: '1.0.0',
+      description: 'API Documentation',
+    },
+    servers: [
+      {
+        url: 'http://localhost:3000',
+      },
+    ],
+  },
+  apis: ['../routes/tasks/*.js'], 
+};
+
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 app.use(cors(corsOptions));
 app.use(helmet());
@@ -32,18 +54,16 @@ app.get("/", (req, res) => {
 // Api routes & tasks
 
 // Users JSON
-const usersRoute = require('../routes/api/usersEndpoint');
+const usersRoute = require('../routes/tasks/usersEndpoint');
 app.use('/api/users', usersRoute);
 
 // News Practice Endpoint
-const newsRoute = require('../routes/api/newsEndpoint');
+const newsRoute = require('../routes/tasks/newsEndpoint');
 app.use('/api/news', newsRoute);
 
 // Fetch Content Endpoint
-const contentRoute = require('../routes/api/contentEndpoint');
+const contentRoute = require('../routes/tasks/contentEndpoint');
 app.use('/api/fetchArticleContent', contentRoute);
-
-// Api Tasks
 
 // Search
 const searchRoute = require('../routes/tasks/search');

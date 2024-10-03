@@ -7,6 +7,93 @@ const { dbParams }         = require('../../db/params/dbParams');
 
 const pool = new Pool(dbParams);
 
+
+/**
+ * @swagger
+ * /tasks/search:
+ *   post:
+ *     summary: Fetch articles based on a search symbol
+ *     tags: [Search]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               symbol:
+ *                 type: string
+ *                 example: "AAPL"
+ *               pageNumber:
+ *                 type: integer
+ *                 example: 1
+ *             required:
+ *               - symbol
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved articles
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   symbol:
+ *                     type: string
+ *                     example: "AAPL"
+ *                   page:
+ *                     type: integer
+ *                     example: 1
+ *                   totalResults:
+ *                     type: integer
+ *                     example: 50
+ *                   articles:
+ *                     type: array
+ *                     items:
+ *                       type: object
+ *                       properties:
+ *                         title:
+ *                           type: string
+ *                           example: "Apple Stock Hits All Time High"
+ *                         description:
+ *                           type: string
+ *                           example: "Apple's stock has seen unprecedented growth..."
+ *                         publishedAt:
+ *                           type: string
+ *                           example: "2024-09-07"
+ *       400:
+ *         description: Bad request (symbol is required)
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Symbol is required"
+ *       401:
+ *         description: Unauthorized (user must be logged in)
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Unauthorized. Please log in."
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Failed to fetch articles"
+*/
+
 router.post("/", async (req, res) => {
   const ticker           = req.body
   // Symbol Object destructuring

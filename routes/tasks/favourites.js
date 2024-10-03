@@ -8,6 +8,98 @@ const renameProperties     = require('../../lib/propertyCaseFormatter');
 
 const pool = new Pool(dbParams);
 
+/**
+ * @swagger
+ * /tasks/favourites:
+ *   post:
+ *     summary: Add an article to the user's favorites
+ *     tags: [Favorites]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               publishedAt:
+ *                 type: string
+ *                 example: "2024-09-07"
+ *               source:
+ *                 type: object
+ *                 properties:
+ *                   name:
+ *                     type: string
+ *                     example: "Example News"
+ *               author:
+ *                 type: string
+ *                 example: "John Doe"
+ *               title:
+ *                 type: string
+ *                 example: "Breaking News Article"
+ *               description:
+ *                 type: string
+ *                 example: "This is a description of the breaking news article."
+ *               url:
+ *                 type: string
+ *                 example: "https://www.example.com/article"
+ *               urlToImage:
+ *                 type: string
+ *                 example: "https://www.example.com/image.jpg"
+ *             required:
+ *               - publishedAt
+ *               - source
+ *               - author
+ *               - title
+ *               - description
+ *               - url
+ *               - urlToImage
+ *     responses:
+ *       201:
+ *         description: Successfully added the article to favorites
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: integer
+ *                   example: 1
+ *                 publishedAt:
+ *                   type: string
+ *                   example: "2024-09-07"
+ *                 source:
+ *                   type: object
+ *                   properties:
+ *                     name:
+ *                       type: string
+ *                       example: "Example News"
+ *                 author:
+ *                   type: string
+ *                   example: "John Doe"
+ *                 title:
+ *                   type: string
+ *                   example: "Breaking News Article"
+ *                 description:
+ *                   type: string
+ *                   example: "This is a description of the breaking news article."
+ *                 url:
+ *                   type: string
+ *                   example: "https://www.example.com/article"
+ *                 urlToImage:
+ *                   type: string
+ *                   example: "https://www.example.com/image.jpg"
+ *       404:
+ *         description: Error while adding article
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "addarticle error = [error message]"
+ */
+
 router.post("/", async (req, res) => {
   const currentUser = req.session.user_id;
   return await pool
