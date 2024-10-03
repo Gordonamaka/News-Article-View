@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import ArticleItem from './articleItem';
-import SearchInput from './articleSearch';
 import LoginForm from './login';
 import RegisterForm from './register';
-import { SearchArticles } from '../functions/searchArticles';
-import { LoginUser } from '../functions/loginUser';
-import { RegisterUser } from '../functions/registerUser';
+import ArticleItem from './articleItem';
+import SearchInput from './articleSearch';
 import PaginationElement from './pagination';
+import { LoginUser } from '../functions/loginUser';
+import { LogoutUser } from '../functions/logoutUser';
+import { RegisterUser } from '../functions/registerUser';
+import { SearchArticles } from '../functions/searchArticles';
 import '../styles/articleSection.css'
 
 interface ArticleType {
@@ -62,6 +63,14 @@ const ArticleList: React.FC = () => {
     }
   };
 
+  const handleLogout = async () => {
+    await LogoutUser();
+    setUser(null);
+    setLoginStatus(false);
+    alert('You have successfully logged out.');
+    window.location.reload();
+  };
+
   return (
     <div className='article-page'>
       <h1 id='page-title'> News App</h1>
@@ -79,6 +88,9 @@ const ArticleList: React.FC = () => {
             <a id='favourite-page-btn' href='/favourites' target='_blank' rel='noreferrer' className='btn'>
               Favourites
             </a>
+            <button id='logout' className='btn' onClick={handleLogout}>
+              Logout
+            </button>
           </div>
         )}
         

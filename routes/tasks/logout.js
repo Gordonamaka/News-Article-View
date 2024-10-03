@@ -11,7 +11,7 @@ router.use(cookieSession({
 // Endpoint receives request from the frontend and runs the req.session in order to delete cookie and logout user
 router.post('/', (req, res) => {
 	req.session = null;
-    console.log('almost there...')
+    console.log('User Logged Out')
     res.status(200).send('Sucessfully logged out!');
 });
 
